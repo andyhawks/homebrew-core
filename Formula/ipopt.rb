@@ -1,16 +1,16 @@
 class Ipopt < Formula
   desc "Interior point optimizer"
   homepage "https://coin-or.github.io/Ipopt/"
-  url "https://github.com/coin-or/Ipopt/archive/releases/3.13.4.tar.gz"
-  sha256 "1fdd0f8ea637856d66b1ebdd7d52ad1b8b8c1142d1a4ce0976b200ab280e5683"
+  url "https://github.com/coin-or/Ipopt/archive/releases/3.14.1.tar.gz"
+  sha256 "afa37bbb0d91003c58284113717dc304718a1f236c97fe097dfab1672cb879c6"
   license "EPL-1.0"
   head "https://github.com/coin-or/Ipopt.git"
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "b565cf2a619ac1925cda935b9ded13ee66f339d8d87716eff7778ea6e8364d9c"
-    sha256 cellar: :any, big_sur:       "3b0388a537a291d3078a67cccceff9b3d26042a868da1a48fef3dde71d33f26e"
-    sha256 cellar: :any, catalina:      "40f3152e3f24b107acad92e645391ffdee423210a1af5e2c0d286ab14aa92d5b"
-    sha256 cellar: :any, mojave:        "13409cd330a4e313b67044d868618168dfd2e6c0adf8ff660243c3afedfada4b"
+    sha256 cellar: :any, arm64_big_sur: "dd6168dd885e5c86595dc4d44418672770d31d63f59dd2dc99d503bf89b94b08"
+    sha256 cellar: :any, big_sur:       "3effb180e71de5b365670b7f80b4e7a8af7d126f236744c2a09c4954368a05a9"
+    sha256 cellar: :any, catalina:      "60d8be3bd1f46bfc365a9824c73317719d969193106fd2111dea3c31ff1acfd5"
+    sha256 cellar: :any, mojave:        "9ad773e484d983e1c9f092f07d5e90491779336edf4a940520ad5c0645410b33"
   end
 
   depends_on "openjdk" => :build
@@ -20,8 +20,8 @@ class Ipopt < Formula
   depends_on "openblas"
 
   resource "mumps" do
-    url "http://mumps.enseeiht.fr/MUMPS_5.3.5.tar.gz"
-    sha256 "e5d665fdb7043043f0799ae3dbe3b37e5b200d1ab7a6f7b2a4e463fd89507fa4"
+    url "http://mumps.enseeiht.fr/MUMPS_5.4.0.tar.gz"
+    sha256 "c613414683e462da7c152c131cebf34f937e79b30571424060dd673368bbf627"
 
     # MUMPS does not provide a Makefile.inc customized for macOS.
     patch do
@@ -31,8 +31,8 @@ class Ipopt < Formula
   end
 
   resource "test" do
-    url "https://github.com/coin-or/Ipopt/archive/releases/3.13.4.tar.gz"
-    sha256 "1fdd0f8ea637856d66b1ebdd7d52ad1b8b8c1142d1a4ce0976b200ab280e5683"
+    url "https://github.com/coin-or/Ipopt/archive/releases/3.14.1.tar.gz"
+    sha256 "afa37bbb0d91003c58284113717dc304718a1f236c97fe097dfab1672cb879c6"
   end
 
   def install

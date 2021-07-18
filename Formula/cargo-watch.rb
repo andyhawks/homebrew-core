@@ -1,19 +1,20 @@
 class CargoWatch < Formula
   desc "Watches over your Cargo project's source"
   homepage "https://github.com/passcod/cargo-watch"
-  url "https://github.com/passcod/cargo-watch/archive/v7.5.1.tar.gz"
-  sha256 "8421f4344dd11c1756e4041a678d5de32dae92eb01887d6ed147f5afc1e22675"
+  url "https://github.com/passcod/cargo-watch/archive/v7.8.1.tar.gz"
+  sha256 "d231e4792921829ff513d8c4f6e553b67c1e7cf852f889d5b54e74b2a5b9c4b0"
   license "CC0-1.0"
   head "https://github.com/passcod/cargo-watch.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "f2678878106d0e49efc89fe54bc067baccfae665aebd315445fd2b209c92c340"
-    sha256 cellar: :any_skip_relocation, big_sur:       "9cb2093218ac5a1bdd37be8bca0e0d088d0634082f1140d8129a190d6fadb987"
-    sha256 cellar: :any_skip_relocation, catalina:      "37410c79c87cf264f8fcaf7dc91aed79cc75a4c14217faf14e9a12b119c55bdb"
-    sha256 cellar: :any_skip_relocation, mojave:        "4ed92b4233b11e2860096fde5f81ab350e76d535bf20ef2afbae3546edf8872d"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "fcdb7a40d46c1c39c6b8cc99bfafdc68ccbff182938753e5708cdce4ffb3570f"
+    sha256 cellar: :any_skip_relocation, big_sur:       "8d56149acd4bebfce0d827186abe144c82f3e97f871f7528c12d4545a3f45583"
+    sha256 cellar: :any_skip_relocation, catalina:      "ae897242f7c94e44db4f2e3776f3620f24b608578f8c38c769dca8fb5f1e0ca3"
+    sha256 cellar: :any_skip_relocation, mojave:        "236b14438968d345bb5d97a20b871c9e629170c7f4ff10948f07258740aabbab"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "5b640b2cfd5fcaabd5832184e07ce3ae9e6f836a7b41f12aa870f2246b59787f"
   end
 
-  depends_on "rust" => :build
+  depends_on "rust" => [:build, :test]
 
   def install
     system "cargo", "install", *std_cargo_args
@@ -21,7 +22,7 @@ class CargoWatch < Formula
 
   test do
     output = shell_output("#{bin}/cargo-watch -x build 2>&1", 1)
-    assert_match "error: Not a Cargo project, aborting.", output
+    assert_match "error: project root does not exist", output
 
     assert_equal "cargo-watch #{version}", shell_output("#{bin}/cargo-watch --version").strip
   end

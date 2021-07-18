@@ -2,8 +2,8 @@ class Kamel < Formula
   desc "Apache Camel K CLI"
   homepage "https://camel.apache.org/"
   url "https://github.com/apache/camel-k.git",
-      tag:      "v1.3.1",
-      revision: "b705f57d2503505388e40931a8c97ad50fc2d346"
+      tag:      "v1.4.0",
+      revision: "4e7c313e87f7f808dcf5cd3182dcacf8874618bc"
   license "Apache-2.0"
   head "https://github.com/apache/camel-k.git"
 
@@ -13,10 +13,10 @@ class Kamel < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "c52e7f5e007e12e4c191db92ed779e7aded3e09a42284871a50c52fec108c311"
-    sha256 cellar: :any_skip_relocation, big_sur:       "5e07672ad25869206e8d43c1959426411b6f1a410e44e4e2279271e07c542684"
-    sha256 cellar: :any_skip_relocation, catalina:      "982c51e01f8e5bf9fb867c5107428ffe3ef000400c1d9cdc9c5710d50d4f194d"
-    sha256 cellar: :any_skip_relocation, mojave:        "356cffa21363864841e10ef0073c6a6ce25d215a7cc728d246e0953c896dfebf"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "4ed5bfb0a281e87e0453e4a5fec0d18dd86685ae974a84b9cec35f50f5ff6ef2"
+    sha256 cellar: :any_skip_relocation, big_sur:       "dcb66f55f2212852376f433f6dfcaf40b5f520c2018b7a353d9d002b933b1092"
+    sha256 cellar: :any_skip_relocation, catalina:      "bde7a6651e566935bc753713249e8b858846c84ef3104a1965336f9bc26c0c73"
+    sha256 cellar: :any_skip_relocation, mojave:        "f3c5e8aacf4435e5cb7c3a75f9af9382087307e23ba837525c7e60375eb105fe"
   end
 
   depends_on "go" => :build
@@ -39,7 +39,7 @@ class Kamel < Formula
     assert_match "Apache Camel K is a lightweight", run_output
 
     help_output = shell_output("echo $(#{bin}/kamel help 2>&1)")
-    assert_match "Error: cannot get command client: invalid configuration", help_output.chomp
+    assert_match "kamel [command] --help", help_output.chomp
 
     get_output = shell_output("echo $(#{bin}/kamel get 2>&1)")
     assert_match "Error: cannot get command client: invalid configuration", get_output

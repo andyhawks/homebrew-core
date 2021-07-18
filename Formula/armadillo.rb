@@ -1,9 +1,10 @@
 class Armadillo < Formula
   desc "C++ linear algebra library"
   homepage "https://arma.sourceforge.io/"
-  url "https://downloads.sourceforge.net/project/arma/armadillo-10.2.2.tar.xz"
-  sha256 "94295fc62ecc4373e5a96c7b62b923fd71a81f315aa9597b282aafd8559e9435"
+  url "https://downloads.sourceforge.net/project/arma/armadillo-10.5.3.tar.xz"
+  sha256 "e6c51d8d52a6f78b9c6459f6986135093e0ee705a674307110f6175f2cd5ee37"
   license "Apache-2.0"
+  revision 1
 
   livecheck do
     url :stable
@@ -11,10 +12,11 @@ class Armadillo < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "f0c1b6aa5583da65cf939b736c374ace47170d64fdba5fc848709b95c3cf708d"
-    sha256 cellar: :any, big_sur:       "7e8666013161c64c061b9e21dd2a0e7776a563e7d2fcac7c5e22d33399b25f2c"
-    sha256 cellar: :any, catalina:      "e8f231d4cb41621885d9024e6ac0621d1e5553506932bc9bda8a222822a6ca97"
-    sha256 cellar: :any, mojave:        "b433dfaa5d5af7a5efa540d009ed1c2ba8609b1ecc85eb44e871739c574b235e"
+    sha256 cellar: :any,                 arm64_big_sur: "797389e5e5a213eec7661c3827fc63613cc4d9f8ab74fae22761a57bcd101af9"
+    sha256 cellar: :any,                 big_sur:       "9937d6dc3d66446f9c6c5bcb71ca18b9767b691c175991aba73a4359631c692a"
+    sha256 cellar: :any,                 catalina:      "7aa6135472c7a8c23211279d50f2291f693eb0c86b57bfaad8987e82c7703786"
+    sha256 cellar: :any,                 mojave:        "dd17f5fb9b42e4c583c9dae41058e22ef0589b9718231171ddb132f573cbbb42"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6e54f80c943843a7abe7473f94732e8ac3455999be3f422f4f24ad4ec8d77319"
   end
 
   depends_on "cmake" => :build
@@ -30,6 +32,10 @@ class Armadillo < Formula
 
     system "cmake", ".", "-DDETECT_HDF5=ON", "-DALLOW_OPENBLAS_MACOS=ON", *std_cmake_args
     system "make", "install"
+
+    # Avoid cellar path references that are invalidated by version/revision bumps
+    hdf5 = Formula["hdf5"]
+    inreplace include/"armadillo_bits/config.hpp", hdf5.prefix.realpath, hdf5.opt_prefix
   end
 
   test do

@@ -1,8 +1,8 @@
 class Siege < Formula
   desc "HTTP regression testing and benchmarking utility"
   homepage "https://www.joedog.org/siege-home/"
-  url "http://download.joedog.org/siege/siege-4.0.7.tar.gz"
-  sha256 "bfa75b3eaad372e7b89eee75d789cd6acbda34900a0c6e49030cf0f803b56df8"
+  url "http://download.joedog.org/siege/siege-4.1.0.tar.gz"
+  sha256 "367927503856620e21328e70d091c47f869c29fe1fdb724cb7291cd48190d111"
   license "GPL-3.0"
 
   livecheck do
@@ -11,11 +11,11 @@ class Siege < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 arm64_big_sur: "77c2687b1ae0baf1d035a369ecc8c2d67eff4d38ee1d84ee434e33702fbce5a4"
-    sha256 big_sur:       "7efea2f148c0b6323fa3b605b57bb5122cbe042626b0e0e059b697cf65c78207"
-    sha256 catalina:      "52d3c7d5f18591e84a8407281a48e5dfb449f2e5c0628edb8b0998470414d4b7"
-    sha256 mojave:        "f505c43ad4aa79798c14ee1df2fdeea2ffe62588e1dfd1928fc0eddb385497a5"
+    sha256 arm64_big_sur: "b167a82660a06e04af54b8905b035cf235ad0ca9e8213347c62db035b41fedda"
+    sha256 big_sur:       "05638d19ffa563cc481eab657c0e736d5d781c40a217011d4d665544801c7aef"
+    sha256 catalina:      "a0a699800f7ac139560131786274f5be98df746311f3bee6775f11fdff769890"
+    sha256 mojave:        "2a5469ea2ac0139438dc899c479011b91bf39d5115da1dcf4e4d245a17d8a89e"
+    sha256 x86_64_linux:  "705bd34131e701e7fbbfde2fccdf6fdbc22b74de15f4df06ad053a1b0f87a24c"
   end
 
   depends_on "openssl@1.1"

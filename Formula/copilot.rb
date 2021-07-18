@@ -2,18 +2,24 @@ require "language/node"
 
 class Copilot < Formula
   desc "CLI tool for Amazon ECS and AWS Fargate"
-  homepage "https://github.com/aws/copilot-cli/wiki"
+  homepage "https://aws.github.io/copilot-cli/"
   url "https://github.com/aws/copilot-cli.git",
-      tag:      "v1.3.0",
-      revision: "cc48fae82b2d83cf041ef08eca3879e173b979f4"
+      tag:      "v1.8.3",
+      revision: "4a347b8ff197087f607476033b9125934d216502"
   license "Apache-2.0"
   head "https://github.com/aws/copilot-cli.git"
 
+  livecheck do
+    url :stable
+    strategy :github_latest
+  end
+
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "35bf8affb16f06e8435a2a1b273627b240c89044186833e16ef3495f983d215e"
-    sha256 cellar: :any_skip_relocation, big_sur:       "ca81917801301987b7688fb7a9e8b4fec893ee210c4a7465debd2d2bfdd09ea5"
-    sha256 cellar: :any_skip_relocation, catalina:      "d525998e5f9af989be701c5b24760c559340d1dd603c3273766c0d31f4080c8f"
-    sha256 cellar: :any_skip_relocation, mojave:        "520499adac5166ebd3407372bc0c7221f1303c94518b3d4ce5aa934d80862613"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "4a8a77f6675386a39d8ef3982cdb9a077880c0b219f8efed77ac287e366ab48d"
+    sha256 cellar: :any_skip_relocation, big_sur:       "8fa1ef6746119c158d9b9430064b8df1a6dd6db392599af580493bf1ee78b60b"
+    sha256 cellar: :any_skip_relocation, catalina:      "71482ff6bd0974722b6d8794e6625539147a90e1de26fd7d153f584bf871ee30"
+    sha256 cellar: :any_skip_relocation, mojave:        "8506fd1fdd7d388fd062ed5788eac856906583531ac9f9ebe1b96d4a89640216"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c43427dac53d226a5ae3dd1a6d331e0a4d44a5489b83208106ad5dd63fb64fe4"
   end
 
   depends_on "go" => :build

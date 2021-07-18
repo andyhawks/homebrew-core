@@ -6,7 +6,7 @@ class FfmpegAT28 < Formula
   # None of these parts are used by default, you have to explicitly pass `--enable-gpl`
   # to configure to activate them. In this case, FFmpeg's license changes to GPL v2+.
   license "GPL-2.0-or-later"
-  revision 4
+  revision 6
 
   livecheck do
     url "https://ffmpeg.org/download.html"
@@ -14,10 +14,10 @@ class FfmpegAT28 < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "5a432898ef516adf004d539fa27a4557d9665e574148fd2497579642d6c87e01"
-    sha256 big_sur:       "27699b594d60d0956024149eb2c275e55d06f4e184837bf94b118d1b94058e2c"
-    sha256 catalina:      "05ee349f50b124d6a1086e252e7525a0ff82a37a4770e55e3170c55dfa52f73a"
-    sha256 mojave:        "7ea539da2ed55ae2a26019bb0c41478fbc6b72c1e96e5d6a02cbb6a1c1a92d77"
+    sha256 arm64_big_sur: "be1cf249c7f61941ef9b6c7c904d297df097f87d1abbd83e230204f2bf3285b3"
+    sha256 big_sur:       "0a534f1dfa9883773089558f654f2c90a7f128d5f5787c12df27bb1199faa0d7"
+    sha256 catalina:      "15d64cda816e5112320e847ed0d5379fd241d7a15cb69e3ed5fc8e0f7303f5c4"
+    sha256 mojave:        "55c1fffb7b5dff17aecbd10eec6d509290edae37dd5898ef46bd3bf3abcaa782"
   end
 
   keg_only :versioned_formula

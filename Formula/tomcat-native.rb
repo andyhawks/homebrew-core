@@ -1,23 +1,22 @@
 class TomcatNative < Formula
   desc "Lets Tomcat use some native resources for performance"
   homepage "https://tomcat.apache.org/native-doc/"
-  url "https://www.apache.org/dyn/closer.lua?path=tomcat/tomcat-connectors/native/1.2.26/source/tomcat-native-1.2.26-src.tar.gz"
-  mirror "https://archive.apache.org/dist/tomcat/tomcat-connectors/native/1.2.26/source/tomcat-native-1.2.26-src.tar.gz"
-  sha256 "b7e5449d206803d6581e0bda7694c9ca8b989938e0054c468df87f9ecb28757d"
+  url "https://www.apache.org/dyn/closer.lua?path=tomcat/tomcat-connectors/native/1.2.30/source/tomcat-native-1.2.30-src.tar.gz"
+  mirror "https://archive.apache.org/dist/tomcat/tomcat-connectors/native/1.2.30/source/tomcat-native-1.2.30-src.tar.gz"
+  sha256 "92dbf7450907f2f55ef495b22f9fc10584f7bf6dd69c7926c2a1b440e9fed335"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "2ee50a4c91f3aa4730f5c377c4ef7c9a9494b3e02e6749412bb75e1708ad31b3"
-    sha256 cellar: :any, big_sur:       "3b0f75610b602e3708086306a3e1d0bbe999733d31781528c9046c438466f1df"
-    sha256 cellar: :any, catalina:      "cbf3a72459605532c35448ef1b6cf29096c727ee351e21da920f0f3b60f35da6"
-    sha256 cellar: :any, mojave:        "69416e41dfcad81232fb36a103e3e62c57f8f4a1418ebbf5e083c17fba5b5f9b"
+    sha256 cellar: :any, arm64_big_sur: "c1871b1b96ce328260184458fa598eb6664a4afdef2e92f8de6dc2574f2f077e"
+    sha256 cellar: :any, big_sur:       "8c740bb2aed61249b111b7d40e0c09988c5c5b717ae3af5724f3fbcc616c3dee"
+    sha256 cellar: :any, catalina:      "8f840854bbab495964cd8e49f47f38db7f8aae94ede0c80cdfa64bf45cbd3610"
+    sha256 cellar: :any, mojave:        "f4912c4d778256a7104b20ff7d767fb12c2c78db7d321e1e8e7e7f301473d903"
   end
 
   depends_on "libtool" => :build
   depends_on "apr"
   depends_on "openjdk"
   depends_on "openssl@1.1"
-  depends_on "tomcat"
 
   def install
     cd "native" do

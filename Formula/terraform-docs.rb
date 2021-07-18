@@ -1,15 +1,16 @@
 class TerraformDocs < Formula
   desc "Tool to generate documentation from Terraform modules"
   homepage "https://github.com/terraform-docs/terraform-docs"
-  url "https://github.com/terraform-docs/terraform-docs/archive/v0.11.2.tar.gz"
-  sha256 "0f409934c2e1a57bcebb5f3b2f4bd44c31981f55e861413924bd2605a03f4c5c"
+  url "https://github.com/terraform-docs/terraform-docs/archive/v0.14.1.tar.gz"
+  sha256 "6c3157cb7eaac2e62b32556ab9cd5f83e58c2934aa3eb7c1e61c00c7c5b1e186"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "397b1e57c3f486b715067a4d033d1d4aed1a4087fd9125e640eb172fa9a911da"
-    sha256 cellar: :any_skip_relocation, big_sur:       "217078eb92ae040da5e32a587cf06f78390ce575a467bed0381748128c55a298"
-    sha256 cellar: :any_skip_relocation, catalina:      "2d461a60cca9cd8c10ca1b596b210cdaf2a5e4d9b808cff2cfedf262185d5457"
-    sha256 cellar: :any_skip_relocation, mojave:        "dbfa96439adb5d07f9b7e18b4ecd8d32c66d3c24e55500de086483ed2f3f9033"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "6c2bae9abc34119abfb656979cfcfdca40cdb235fe5621807d879f6016159d27"
+    sha256 cellar: :any_skip_relocation, big_sur:       "47c837d6ceed7dd58008f98abc6dda7e2d5bcc7fc86564e895ab61df2d8b83ab"
+    sha256 cellar: :any_skip_relocation, catalina:      "9c17f4fa41db947ff3d11fce84b21be9bc497ea79728c84c9b35110614857294"
+    sha256 cellar: :any_skip_relocation, mojave:        "f295cd5412830ff30abe601dbedd2436b01ad4bebd20f7d271a691bc247bab1f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1234eabe94e2d88cfeead87536d678f782a52b348ba781662c74c8fb04acc314"
   end
 
   depends_on "go" => :build
@@ -17,7 +18,11 @@ class TerraformDocs < Formula
   def install
     system "make", "build"
     cpu = Hardware::CPU.arm? ? "arm64" : "amd64"
-    bin.install "bin/darwin-#{cpu}/terraform-docs"
+    os = "darwin"
+    on_linux do
+      os = "linux"
+    end
+    bin.install "bin/#{os}-#{cpu}/terraform-docs"
     prefix.install_metafiles
   end
 

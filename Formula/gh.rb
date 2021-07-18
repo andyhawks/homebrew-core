@@ -1,8 +1,8 @@
 class Gh < Formula
   desc "GitHub command-line tool"
   homepage "https://github.com/cli/cli"
-  url "https://github.com/cli/cli/archive/v1.7.0.tar.gz"
-  sha256 "8d737d4e4a2943ca6e08c030c0992468162de0fc1366862d101b8e1389bdc36a"
+  url "https://github.com/cli/cli/archive/v1.12.1.tar.gz"
+  sha256 "14ef58fb2f09da1d66194527e1e8b637d28d972d273a6a627056aa960a9a9121"
   license "MIT"
 
   head "https://github.com/cli/cli.git", branch: "trunk"
@@ -13,10 +13,11 @@ class Gh < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "1575fad6e5dda0241957d4668b04802df7d5a963a93d213471f5f89730d1e260"
-    sha256 cellar: :any_skip_relocation, big_sur:       "88ab0ed37b4050437aaaac46fb444a001b86b024afd04f9926c5f479d44d6a7b"
-    sha256 cellar: :any_skip_relocation, catalina:      "9399e8ca6bb5c0621c06d3963e28db01a9de4074f729054315a048272de3555d"
-    sha256 cellar: :any_skip_relocation, mojave:        "c0dc5b0ddd5a30880be8e162bf9c2cc51f7057707204ae2af3b999715d371537"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "b472c7ad5af1dff481c7cce1e39e97fec16a461a7aa39a8954b58a83387b19f9"
+    sha256 cellar: :any_skip_relocation, big_sur:       "70f1f8244e0f3561ea8b9cd9b9219f0cbccf19dc1d4870dcda0398d00ec1efc7"
+    sha256 cellar: :any_skip_relocation, catalina:      "3327807e347e47044021d91ce67cee5e6822ba9643859c4567d4e8b2932664fb"
+    sha256 cellar: :any_skip_relocation, mojave:        "b4767b1e64d3dc8066b5291a0ef602abd34ddad20b700e75b249f97b9cd89437"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "76ed56cf847c5e6ccdcbbc4b24160f6802e4fbf1867b0defe466b59f2ac8c4db"
   end
 
   depends_on "go" => :build

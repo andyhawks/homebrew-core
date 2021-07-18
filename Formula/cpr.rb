@@ -2,16 +2,17 @@ class Cpr < Formula
   desc "C++ Requests, a spiritual port of Python Requests"
   homepage "https://whoshuu.github.io/cpr/"
   url "https://github.com/whoshuu/cpr.git",
-      tag:      "1.5.2",
-      revision: "41fbaca90160950f1397e0ffc6b58bd81063f131"
+      tag:      "1.6.2",
+      revision: "f4622efcb59d84071ae11404ae61bd821c1c344b"
   license "MIT"
   head "https://github.com/whoshuu/cpr.git"
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "b93aecd08cd2c187694a572c2c9c8d4cdb0ed181b4387fd3e7a68f67a4847d6a"
-    sha256 cellar: :any, big_sur:       "0f3457ec4a948fb235d26d9bfdd0c1b3f53297c0e7c505a1f34a3d853907ddc8"
-    sha256 cellar: :any, catalina:      "51bbf276165a820d37e9d9dfc829e7dae6f100b57bbb4095283955924027a7e8"
-    sha256 cellar: :any, mojave:        "66cfe69826f724c686417117ba2ef710e7765a35c39b648d6d239867f6c47473"
+    sha256 cellar: :any,                 arm64_big_sur: "6b725644e68fd8fd18ee1624248de28bff8e0c206d566852a4821714fed3099e"
+    sha256 cellar: :any,                 big_sur:       "f531320c598e51d6fa215fe35caf9766882349bb1e5d89319ec6a0937202f627"
+    sha256 cellar: :any,                 catalina:      "3c3d0ebe3de5371c93a5b1b68b599e9aee2d5abe2e8598a6775b463be05bcddc"
+    sha256 cellar: :any,                 mojave:        "608ac5168dd4ca3ab78d84827ccfce0abba0ad9699bef82ffad074a0b51aefc4"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8de8dbf9435d2d5ed2bf84013134b6387354ae96f0c4ad8b7a8c2597bed20273"
   end
 
   depends_on "cmake" => :build
@@ -19,19 +20,11 @@ class Cpr < Formula
 
   uses_from_macos "curl"
 
-  # Fix system curl detection
-  # See https://github.com/whoshuu/cpr/pull/428
-  #
-  # Remove in the next release
-  patch do
-    url "https://github.com/whoshuu/cpr/commit/451fd1a896c963367ebb3d77cfe4550b2d5636f3.patch?full_index=1"
-    sha256 "74349209c5d28d9261871080341c735517b3e64e91ac6cc6884abb2767f14b33"
-  end
-
   def install
-    args = std_cmake_args
-    args << "-DUSE_SYSTEM_CURL=ON"
-    args << "-DBUILD_CPR_TESTS=OFF"
+    args = std_cmake_args + %w[
+      -DCPR_FORCE_USE_SYSTEM_CURL=ON
+      -DCPR_BUILD_TESTS=OFF
+    ]
 
     system "cmake", ".", *args, "-DBUILD_SHARED_LIBS=ON"
     system "make", "install"

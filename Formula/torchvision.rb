@@ -1,14 +1,14 @@
 class Torchvision < Formula
   desc "Datasets, transforms, and models for computer vision"
   homepage "https://github.com/pytorch/vision"
-  url "https://github.com/pytorch/vision/archive/v0.9.0.tar.gz"
-  sha256 "9351ed92aded632f8c7f59dfadac13c191a834babe682f5785ea47e6fcf6b472"
+  url "https://github.com/pytorch/vision/archive/refs/tags/v0.10.0.tar.gz"
+  sha256 "82bb2c2b03d8a65f4ea74bb0ee5566b0876a1992aceefb1e11475c7b5d2e857b"
   license "BSD-3-Clause"
 
   bottle do
-    sha256 big_sur:  "b84e3746d1b41f1c9b92316426a829b8ff61300e16495f8940108fd4110bd081"
-    sha256 catalina: "8a53cb08c3f8c860726ecbf6b51984812e9ba182775788b459dc8efe5d7376e6"
-    sha256 mojave:   "be405a858ad7de52375c421a30a5f0bdcffe3d5a403577875000375503fd2d2b"
+    sha256 cellar: :any, big_sur:  "34f138594750340d6d6a6289889c1e79af84835f29b537b4c62f0b171ef54baa"
+    sha256 cellar: :any, catalina: "95db2585d9daab84fc042aaa25a8408139a180eb71f29cf72bafcf752a55f7ad"
+    sha256 cellar: :any, mojave:   "5ab7dac9b945df8694ccbceeca16b08df0ff1f241917d65dfd33217d00f9568c"
   end
 
   depends_on "cmake" => :build

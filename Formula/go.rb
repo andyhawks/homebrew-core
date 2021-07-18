@@ -1,9 +1,9 @@
 class Go < Formula
   desc "Open source programming language to build simple/reliable/efficient software"
   homepage "https://golang.org"
-  url "https://golang.org/dl/go1.16.2.src.tar.gz"
-  mirror "https://fossies.org/linux/misc/go1.16.2.src.tar.gz"
-  sha256 "37ca14287a23cb8ba2ac3f5c3dd8adbc1f7a54b9701a57824bf19a0b271f83ea"
+  url "https://golang.org/dl/go1.16.5.src.tar.gz"
+  mirror "https://fossies.org/linux/misc/go1.16.5.src.tar.gz"
+  sha256 "7bfa7e5908c7cc9e75da5ddf3066d7cbcf3fd9fa51945851325eebc17f50ba80"
   license "BSD-3-Clause"
   head "https://go.googlesource.com/go.git"
 
@@ -13,10 +13,11 @@ class Go < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "b5e7afc5fe32df4a9f66f7467be5ec25266c649a942dba2fadf59ec0b31c6f33"
-    sha256 big_sur:       "b4b8fd4d0e53711f7ad6333146708a1ea61a7063abcfa086f57b1cf3c820e070"
-    sha256 catalina:      "ad0e76d44fb2f21cd125dc7fb97d2625688ed0cd33c02f9df77efa0a7315f82f"
-    sha256 mojave:        "17f5ec09c5cdd9251800b402b277df9443d4718c291ff3de4c1a58066c47f991"
+    sha256 arm64_big_sur: "dde21eedfa67da23db70cf977ae82c0cadd5acf2a326cb91853ff54d0cf5886f"
+    sha256 big_sur:       "416c5e2b7247c78482a5465f79d83c0240ee0c9098c8c7429f9c7af073402cc9"
+    sha256 catalina:      "8a7564fab7f715feed7506e3cc30f20295fd62914418fb636a5a4c4ca1fc7398"
+    sha256 mojave:        "a232e1f840525ab1e9411ba4edaa74c2bb73705e8e6feb7506649a7d608f9292"
+    sha256 x86_64_linux:  "1434dfa5cbe0fd0edb34eab477e156640f3f07599d33105958fe18b329bcfb7d"
   end
 
   # Don't update this unless this version cannot bootstrap the new version.

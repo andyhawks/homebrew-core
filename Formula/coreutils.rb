@@ -12,6 +12,7 @@ class Coreutils < Formula
     sha256 big_sur:       "371ec57703b3646e0113331308b6e03617c2a7f91e15e113380b605455daba20"
     sha256 catalina:      "7a97ad96dfbe6abbb5c94424518a077e040af8a77d1946ca960a5f33cd237551"
     sha256 mojave:        "10fbad2e35846c7e835cb979b5beb9edf07f3a9742ddcc3c28d9abd5fe9ccb1b"
+    sha256 x86_64_linux:  "6d0ddc3ead1b8259a9a97b7bc9cc891cbc5a236a82afd51f224de16affea0b54"
   end
 
   head do
@@ -27,6 +28,10 @@ class Coreutils < Formula
   end
 
   uses_from_macos "gperf" => :build
+
+  on_linux do
+    depends_on "attr"
+  end
 
   conflicts_with "aardvark_shell_utils", because: "both install `realpath` binaries"
   conflicts_with "b2sum", because: "both install `b2sum` binaries"
@@ -45,6 +50,7 @@ class Coreutils < Formula
       --prefix=#{prefix}
       --program-prefix=g
       --without-gmp
+      --without-selinux
     ]
 
     system "./configure", *args
@@ -65,6 +71,9 @@ class Coreutils < Formula
       b2sum base32 chcon hostid md5sum nproc numfmt pinky ptx realpath runcon
       sha1sum sha224sum sha256sum sha384sum sha512sum shred shuf stdbuf tac timeout truncate
     ]
+    on_linux do
+      no_conflict += ["dir", "dircolors", "vdir"]
+    end
     no_conflict.each do |cmd|
       bin.install_symlink "g#{cmd}" => cmd
       man1.install_symlink "g#{cmd}.1" => "#{cmd}.1"
@@ -72,8 +81,12 @@ class Coreutils < Formula
   end
 
   def caveats
+    msg = "Commands also provided by macOS"
+    on_linux do
+      msg = "All commands"
+    end
     <<~EOS
-      Commands also provided by macOS have been installed with the prefix "g".
+      #{msg} have been installed with the prefix "g".
       If you need to use these commands with their normal names, you
       can add a "gnubin" directory to your PATH from your bashrc like:
         PATH="#{opt_libexec}/gnubin:$PATH"

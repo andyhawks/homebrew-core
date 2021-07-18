@@ -3,33 +3,35 @@ class Regipy < Formula
 
   desc "Offline registry hive parsing tool"
   homepage "https://github.com/mkorman90/regipy"
-  url "https://files.pythonhosted.org/packages/c6/d1/eb096debb2b55cca3d2ae6b09cefa596d2dacba50a81791c5525547a4d34/regipy-1.8.2.tar.gz"
-  sha256 "ef452bd7c7aaed514e821ac60310472b5dbe0914d1e5d17461ffd5b23270970b"
+  url "https://files.pythonhosted.org/packages/68/d9/44a939a5e32e706d904cb7ebdc099964cdc4b677a3ebac6db2477f6ef908/regipy-1.9.3.tar.gz"
+  sha256 "86cdd32eb1148273fd0ac621ddb7dafc494b7f67cd4e9df27ed11a985464fc7a"
   license "MIT"
   head "https://github.com/mkorman90/regipy.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "144da1f401a441a8134d3b7e851a266c39abeef7215f6a06eb61fc5e544436f1"
-    sha256 cellar: :any_skip_relocation, big_sur:       "769ec4dfef3b4cfb19db7d5bad3218b8e5667386c006df160229879bfe38e646"
-    sha256 cellar: :any_skip_relocation, catalina:      "8a72cfb8636c91568d8d8d295865093ece9eb45e8145355ae9291a3ba0ca18b0"
-    sha256 cellar: :any_skip_relocation, mojave:        "8d6b1a24d0b65a33f7b1149800b365e64e3c68b74edfba1a378400aeb3f980e9"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "7f91cc571ae419b6a56e10c3a649a53992362c7376f37e177b309130eabc682f"
+    sha256 cellar: :any_skip_relocation, big_sur:       "f102e1bebbdce2d4c43782795827fe83c76d46480499838be7f0f699ce20c476"
+    sha256 cellar: :any_skip_relocation, catalina:      "40f37eaee0d0ac2142d97c17f070ac443fe72ac4d5cdd3008b3cbf04f84205c9"
+    sha256 cellar: :any_skip_relocation, mojave:        "32315d4acb3745ff42ec792575db3abd04c2ae3fabeeb36557b7038e1bce8752"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9bb9e129be43995847978e65b3ae46f9015d5c2950fe82ec30432dcd48992302"
   end
 
+  depends_on "python-tabulate"
   depends_on "python@3.9"
 
   resource "attrs" do
-    url "https://files.pythonhosted.org/packages/f0/cb/80a4a274df7da7b8baf083249b0890a0579374c3d74b5ac0ee9291f912dc/attrs-20.3.0.tar.gz"
-    sha256 "832aa3cde19744e49938b91fea06d69ecb9e649c93ba974535d08ad92164f700"
+    url "https://files.pythonhosted.org/packages/ed/d6/3ebca4ca65157c12bd08a63e20ac0bdc21ac7f3694040711f9fd073c0ffb/attrs-21.2.0.tar.gz"
+    sha256 "ef6aaac3ca6cd92904cdd0d83f629a15f18053ec84e6432106f7a4d04ae4f5fb"
   end
 
   resource "click" do
-    url "https://files.pythonhosted.org/packages/27/6f/be940c8b1f1d69daceeb0032fee6c34d7bd70e3e649ccac0951500b4720e/click-7.1.2.tar.gz"
-    sha256 "d2b5255c7c6349bc1bd1e59e08cd12acbbd63ce649f2588755783aa94dfb6b1a"
+    url "https://files.pythonhosted.org/packages/21/83/308a74ca1104fe1e3197d31693a7a2db67c2d4e668f20f43a2fca491f9f7/click-8.0.1.tar.gz"
+    sha256 "8c04c11192119b1ef78ea049e0a6f0463e4c48ef00a30160c704337586f3ad7a"
   end
 
   resource "construct" do
-    url "https://files.pythonhosted.org/packages/da/a6/98e9f1751e618c9e055feba287d32247a7385a1e6aa79e84165a1f8c283b/construct-2.10.59.tar.gz"
-    sha256 "cb752b53cb3678c539e5340f0ee8944479a640bccfff7ca915319cef658c3867"
+    url "https://files.pythonhosted.org/packages/39/2b/c68eaf8294f01ea534f39b8b4ec1d7308b5195e08570c276b104bccd24ff/construct-2.10.67.tar.gz"
+    sha256 "730235fedf4f2fee5cfadda1d14b83ef1bf23790fb1cc579073e10f70a050883"
   end
 
   resource "inflection" do
@@ -52,14 +54,9 @@ class Regipy < Formula
     sha256 "83a4a90894bf38e243cf052c8b58f381bfe9a7a483f6a9cab140bc7f702ac4da"
   end
 
-  resource "tabulate" do
-    url "https://files.pythonhosted.org/packages/57/6f/213d075ad03c84991d44e63b6516dd7d185091df5e1d02a660874f8f7e1e/tabulate-0.8.7.tar.gz"
-    sha256 "db2723a20d04bcda8522165c73eea7c300eda74e0ce852d9022e0159d7895007"
-  end
-
   resource "tqdm" do
-    url "https://files.pythonhosted.org/packages/69/50/9f29874d835945b845812799edc732ba30c41e9d20431f9f69c8ffb9c670/tqdm-4.56.0.tar.gz"
-    sha256 "fe3d08dd00a526850568d542ff9de9bbc2a09a791da3c334f3213d8d0bbbca65"
+    url "https://files.pythonhosted.org/packages/0d/dd/78f7e080d3bfc87fc19bed54513b430659d38efb2d9ea6e3ad815a665a02/tqdm-4.61.2.tar.gz"
+    sha256 "8bb94db0d4468fea27d004a0f1d1c02da3cdedc00fe491c0de986b76a04d6b0a"
   end
 
   resource "test_hive" do

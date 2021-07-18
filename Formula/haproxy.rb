@@ -1,8 +1,8 @@
 class Haproxy < Formula
   desc "Reliable, high performance TCP/HTTP load balancer"
   homepage "https://www.haproxy.org/"
-  url "https://www.haproxy.org/download/2.3/src/haproxy-2.3.6.tar.gz"
-  sha256 "6d4620e5da1d93ed75f229011216db81d5097b68bf175e309f2fab2890bba036"
+  url "https://www.haproxy.org/download/2.4/src/haproxy-2.4.2.tar.gz"
+  sha256 "edf9788f7f3411498e3d7b21777036b4dc14183e95c8e2ce7577baa0ea4ea2aa"
   license "GPL-2.0-or-later" => { with: "openvpn-openssl-exception" }
 
   livecheck do
@@ -11,10 +11,11 @@ class Haproxy < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "f3bbf68e687adab98d27ecd56e298572a9021d668345bdbf2b18b3638d9e4b13"
-    sha256 cellar: :any, big_sur:       "e89b2c929d0b77f246918755f03a0cee50c82909656ba35bcfaa1cd01cef64ef"
-    sha256 cellar: :any, catalina:      "8eb8dc549439bdad51fea54e9c4610a0904f0674a0561c3c7f51302aebc0a638"
-    sha256 cellar: :any, mojave:        "9228c83e3799d8b683728e8a7e10b4048af1be1febbbb4c1e3431c2c08338f8f"
+    sha256 cellar: :any,                 arm64_big_sur: "b54672fb0fe03ae0fa691a09c113f2d9fa6a761f0a903a34b0c59deb8cf154ff"
+    sha256 cellar: :any,                 big_sur:       "7ab9db1ce2e05d9dace25c3326f3c01d08c7e68141d085d4dca532260b7a2781"
+    sha256 cellar: :any,                 catalina:      "926b05c986b62dc851359aaf0e327b77608bb71c2222570692d4733d7f935726"
+    sha256 cellar: :any,                 mojave:        "b98c7e96b60593cbe645a1840f5ccb82d8e253cc4e208d243920c92b303feefa"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "13af7cb7dd5051248675a343830d72c2be49a33cecd3a9c08472cf84e6674d8e"
   end
 
   depends_on "openssl@1.1"
@@ -22,8 +23,6 @@ class Haproxy < Formula
 
   def install
     args = %w[
-      TARGET=generic
-      USE_KQUEUE=1
       USE_POLL=1
       USE_PCRE=1
       USE_OPENSSL=1
@@ -31,6 +30,14 @@ class Haproxy < Formula
       USE_ZLIB=1
       ADDLIB=-lcrypto
     ]
+    on_macos do
+      args << "TARGET=generic"
+      # BSD only:
+      args << "USE_KQUEUE=1"
+    end
+    on_linux do
+      args << "TARGET=linux-glibc"
+    end
 
     # We build generic since the Makefile.osx doesn't appear to work
     system "make", "CC=#{ENV.cc}", "CFLAGS=#{ENV.cflags}", "LDFLAGS=#{ENV.ldflags}", *args

@@ -3,28 +3,16 @@ class Libgusb < Formula
 
   desc "GObject wrappers for libusb1"
   homepage "https://github.com/hughsie/libgusb"
+  url "https://people.freedesktop.org/~hughsient/releases/libgusb-0.3.7.tar.xz"
+  sha256 "da5f25d6873622689b3351486cbe028efc254403f646dd81225dfe8542d8c67d"
   license "LGPL-2.1-only"
-  revision 2
   head "https://github.com/hughsie/libgusb.git"
 
-  stable do
-    url "https://people.freedesktop.org/~hughsient/releases/libgusb-0.3.5.tar.xz"
-    sha256 "5b2a00c6997cc4b0133c5a5748a2e616e9e7504626922105b62aadced78e65df"
-
-    # Patch accepted upstream to allow for building without meson-internal
-    # Remove on next release
-    patch do
-      url "https://github.com/hughsie/libgusb/commit/b2ca7ebb887ff10314a5a000e7d21e33fd4ffc2f.patch?full_index=1"
-      sha256 "a068b0f66079897866d2b9280b3679f58c040989f74ee8d8bd70b0f8e977ec37"
-    end
-  end
-
   bottle do
-    sha256 arm64_big_sur: "934cca2fcf888878cf8da4b40cdbd6548d060f09318242c2818ee3686104ee72"
-    sha256 big_sur:       "7fe394a32e306eb3a5acc9f51b6f07cc46243bb863b15f17eea800d2a1a09231"
-    sha256 catalina:      "4a5345775e87130c47c9c78a9fbe16d28c6dcfc7f74dc76850cae8e1a24ad948"
-    sha256 mojave:        "571f51cd56f7ed502e349d63909977cdf44629976ce7b81a765d6dce39be8fa4"
-    sha256 high_sierra:   "570e84e48faa46bb217f581272679c26cb47c13e0bfe25a33916782e7cdebfdf"
+    sha256 arm64_big_sur: "a03dfea8e1edf9bdf901a7d17cb8cbc9aeb7fe4188376db74d51a0f2d9b0a04c"
+    sha256 big_sur:       "2fd0b79da4ed73da54bae2ae8624ea7b669cb5fc0ff56271e59a54d17f849095"
+    sha256 catalina:      "87dfd4dbc0d2061835c78347f1ea1e37def0091e66ab1da1409b32c03f4a210e"
+    sha256 mojave:        "9eda4fe4eae3ab04d80b218ec9f2f5c631b8eadc31a12b0708af1adb7fb44371"
   end
 
   depends_on "gobject-introspection" => :build

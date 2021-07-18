@@ -3,30 +3,37 @@ class Binwalk < Formula
 
   desc "Searches a binary image for embedded files and executable code"
   homepage "https://github.com/ReFirmLabs/binwalk"
-  url "https://github.com/ReFirmLabs/binwalk/archive/v2.2.0.tar.gz"
-  sha256 "f5495f0e4c5575023d593f7c087c367675df6aeb7f4d9a2966e49763924daa27"
+  url "https://github.com/ReFirmLabs/binwalk/archive/v2.3.1.tar.gz"
+  sha256 "7ec9d8fcb8686f4060d37e1096669e3ed8ce1194c91ad80199622448bcc01b19"
   license "MIT"
-  revision 3
   head "https://github.com/ReFirmLabs/binwalk.git"
 
+  livecheck do
+    url :stable
+    strategy :github_latest
+  end
+
   bottle do
-    sha256 cellar: :any, big_sur:  "b1e5dd1e7292c12e45849813f43a4b57e2f853096ea411f3b9f3668d210d7b18"
-    sha256 cellar: :any, catalina: "35b8be77b69cf292e94d6acc1a84f4ff91bcee2cf5cfb98dacd3b15dea1b7a33"
-    sha256 cellar: :any, mojave:   "f1e6fbd62185d6d102752c0d4eb3f430851c1fe820cae4877c7b45b7869a4e6e"
+    sha256 cellar: :any,                 arm64_big_sur: "de845e209f61f7d53daec264962ce1aeb2fb72b5385ea6b8c9ac2188d0427bff"
+    sha256 cellar: :any,                 big_sur:       "1d408cfd054c7f7e7d1035fae12f1ed22951c99ae2037e12d26a274e97ef3335"
+    sha256 cellar: :any,                 catalina:      "81908a0bc129aade679fcb65b0455ce349288e4ed4239bf48ef68a4fde363f8f"
+    sha256 cellar: :any,                 mojave:        "6d71751e65e4c7f368018a13f38fc7ae56db3174e567e353073aead6bfd6fb76"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "5dd669f1fdc0dbf293fbd42dc02a28caaa75c5d699b671fcd87d1a5a10be72d2"
   end
 
   depends_on "pkg-config" => :build
   depends_on "swig" => :build
   depends_on "freetype"
   depends_on "libpng"
+  depends_on "numpy"
   depends_on "p7zip"
   depends_on "python@3.9"
   depends_on "ssdeep"
   depends_on "xz"
 
   resource "capstone" do
-    url "https://files.pythonhosted.org/packages/2a/a2/026cc921a6ac7e4fcd0c2ba740edce4c37c56af63a79e570bebaf3bd7c50/capstone-4.0.1.tar.gz"
-    sha256 "5857accc0de1e769b0ec0a0ca985715bfa96e5a66a2ebb3aaed43a8e3655377f"
+    url "https://files.pythonhosted.org/packages/f2/ae/21dbb3ccc30d5cc9e8cdd8febfbf5d16d93b8c10e595280d2aa4631a0d1f/capstone-4.0.2.tar.gz"
+    sha256 "2842913092c9b69fd903744bc1b87488e1451625460baac173056e1808ec1c66"
   end
 
   resource "Cycler" do
@@ -40,18 +47,13 @@ class Binwalk < Formula
   end
 
   resource "kiwisolver" do
-    url "https://files.pythonhosted.org/packages/62/b8/db619d97819afb52a3ff5ff6ad3f7de408cc83a8ec2dfb31a1731c0a97c2/kiwisolver-1.2.0.tar.gz"
-    sha256 "247800260cd38160c362d211dcaf4ed0f7816afb5efe56544748b21d6ad6d17f"
+    url "https://files.pythonhosted.org/packages/90/55/399ab9f2e171047d28933ae4b686d9382d17e6c09a01bead4a6f6b5038f4/kiwisolver-1.3.1.tar.gz"
+    sha256 "950a199911a8d94683a6b10321f9345d5a3a8433ec58b217ace979e18f16e248"
   end
 
   resource "matplotlib" do
-    url "https://files.pythonhosted.org/packages/4a/30/eb8e7dd8e3609f05c6920fa82f189302c832e5a0f6667aa96f952056bc0c/matplotlib-3.2.1.tar.gz"
-    sha256 "ffe2f9cdcea1086fc414e82f42271ecf1976700b8edd16ca9d376189c6d93aee"
-  end
-
-  resource "numpy" do
-    url "https://files.pythonhosted.org/packages/84/1e/ff467ac56bfeaea51d4a2e72d315c1fe440b20192fea7e460f0f248acac8/numpy-1.18.2.zip"
-    sha256 "e7894793e6e8540dbeac77c87b489e331947813511108ae097f1715c018b8f3d"
+    url "https://files.pythonhosted.org/packages/22/d4/e7ca532e68a9357742604e1e4ae35d9c09a4a810de39a9d80402bd12f50f/matplotlib-3.3.4.tar.gz"
+    sha256 "3e477db76c22929e4c6876c44f88d790aacdf3c3f8f3a90cb1975c0bf37825b0"
   end
 
   resource "pycrypto" do
@@ -70,8 +72,8 @@ class Binwalk < Formula
   end
 
   resource "six" do
-    url "https://files.pythonhosted.org/packages/21/9f/b251f7f8a76dec1d6651be194dfba8fb8d7781d10ab3987190de8391d08e/six-1.14.0.tar.gz"
-    sha256 "236bdbdce46e6e6a3d61a337c0f8b763ca1e8717c03b369e87a7ec7ce1319c0a"
+    url "https://files.pythonhosted.org/packages/6b/34/415834bfdafca3c5f451532e8a8d9ba89a21c9743a0c59fbd0205c7f9426/six-1.15.0.tar.gz"
+    sha256 "30639c035cdb23534cd4aa2dd52c3bf48f06e5f4a941509c8bafd8ce11080259"
   end
 
   def install

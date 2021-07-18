@@ -1,15 +1,15 @@
 class Mydumper < Formula
   desc "How MySQL DBA & support engineer would imagine 'mysqldump' ;-)"
   homepage "https://launchpad.net/mydumper"
-  url "https://github.com/maxbube/mydumper/archive/v0.10.1.tar.gz"
-  sha256 "66b64f0c9410143ab4a32794f58769965495ac0385882b239f2c928281c1e798"
+  url "https://github.com/maxbube/mydumper/archive/v0.10.7.tar.gz"
+  sha256 "880f474ed5c9b068860b61b3e94ff148957bc73ba663738abd7d8c4503548e75"
   license "GPL-3.0-or-later"
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "2a6e0ac0dc3666bd2b4968a3e860781b06972794124579cffa4d01f8f7aac0e5"
-    sha256 cellar: :any, big_sur:       "7d69132e5dc16095b3505e9e0d9a32d007ed59aaddc434080aca281be67b89f0"
-    sha256 cellar: :any, catalina:      "c4209a1c5683a68bbbf7ef285bd3426ccc356c0c4d3b605ebe239883b060e743"
-    sha256 cellar: :any, mojave:        "474f771d2bc3621402c21ffe07286f7a67b5e344209514ef63d55c1f2bf8b266"
+    sha256 cellar: :any, arm64_big_sur: "1f86c0904c414620fd5f7223ce325e728901ff4d1c75f84ac253dfeb88f88ad4"
+    sha256 cellar: :any, big_sur:       "c680a5cd0368a1a62d0aeb5aa5d36de2535cb2b67bc46621db3020323fb5ba86"
+    sha256 cellar: :any, catalina:      "3d7e7785f6e0a456b5fe251ec2887cb66d3b9cf7a02668ba522ae49226cd7fca"
+    sha256 cellar: :any, mojave:        "816b1dd45636deeb227bebd1387db705d16bb9bcb702ae81862b99edb01e8801"
   end
 
   depends_on "cmake" => :build
@@ -21,15 +21,6 @@ class Mydumper < Formula
   depends_on "pcre"
 
   uses_from_macos "zlib"
-
-  # This patch allows cmake to find .dylib shared libs in macOS. A bug report has
-  # been filed upstream here: https://bugs.launchpad.net/mydumper/+bug/1517966
-  # It also ignores .a libs because of an issue with glib's static libraries now
-  # being included by default in homebrew.
-  #
-  # Although we override the mysql library location this patch is still required
-  # because the setting of ${CMAKE_FIND_LIBRARY_SUFFIXES} affects other probes as well.
-  patch :p0, :DATA
 
   def install
     system "cmake", ".", *std_cmake_args,
@@ -46,16 +37,3 @@ class Mydumper < Formula
     system bin/"mydumper", "--help"
   end
 end
-
-__END__
---- cmake/modules/FindMySQL.cmake	2015-09-16 16:11:34.000000000 -0400
-+++ cmake/modules/FindMySQL.cmake	2015-09-16 16:10:56.000000000 -0400
-@@ -84,7 +84,7 @@
- )
-
- set(TMP_MYSQL_LIBRARIES "")
--set(CMAKE_FIND_LIBRARY_SUFFIXES .so .a .lib .so.1)
-+set(CMAKE_FIND_LIBRARY_SUFFIXES .so .lib .dylib .so.1)
- foreach(MY_LIB ${MYSQL_ADD_LIBRARIES})
-     find_library("MYSQL_LIBRARIES_${MY_LIB}" NAMES ${MY_LIB}
-         HINTS

@@ -1,11 +1,10 @@
 class Gnutls < Formula
   desc "GNU Transport Layer Security (TLS) Library"
   homepage "https://gnutls.org/"
-  url "https://www.gnupg.org/ftp/gcrypt/gnutls/v3.6/gnutls-3.6.15.tar.xz"
-  mirror "https://www.mirrorservice.org/sites/ftp.gnupg.org/gcrypt/gnutls/v3.6/gnutls-3.6.15.tar.xz"
-  sha256 "0ea8c3283de8d8335d7ae338ef27c53a916f15f382753b174c18b45ffd481558"
-  # license "LGPL-2.1-or-later AND GPL-3.0-only" - review syntax after resolving https://github.com/Homebrew/brew/pull/8260
-  license "GPL-3.0-only"
+  url "https://www.gnupg.org/ftp/gcrypt/gnutls/v3.6/gnutls-3.6.16.tar.xz"
+  mirror "https://www.mirrorservice.org/sites/ftp.gnupg.org/gcrypt/gnutls/v3.6/gnutls-3.6.16.tar.xz"
+  sha256 "1b79b381ac283d8b054368b335c408fedcb9b7144e0c07f531e3537d4328f3b3"
+  license all_of: ["LGPL-2.1-or-later", "GPL-3.0-only"]
 
   livecheck do
     url "https://www.gnupg.org/ftp/gcrypt/gnutls/v3.6/"
@@ -13,11 +12,11 @@ class Gnutls < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "c17d19750e8de06d56d80c49c7e31fb7f334f345bcb1aa2489827f575c82cdbd"
-    sha256 big_sur:       "6f523e8ce74c567d17a4a5b69794e897074a016b895a5d8ef7122ac006b770fc"
-    sha256 catalina:      "513407ec28ac63623dbc05ac6880d59cf7c082827687dfda7d0f065232151878"
-    sha256 mojave:        "cd25205fbf27599b4186f8549324a50f045fa680b8c02a98230dcf910dff0941"
-    sha256 high_sierra:   "5a1c108c598159c9d3dc203bed684cf70ca5dae5ee875166b35420fd2415a61e"
+    sha256 arm64_big_sur: "f63ca35051efae87447075f5d0ab1fcccb4503c8c94b7fa9c3a0c59710066390"
+    sha256 big_sur:       "49e6f4d5d47e7d241b1c931593a74cbdef02e74ed01788b8b8c8ff2da75e22db"
+    sha256 catalina:      "d9af37a7677414243fc1aa2359c388f090f86d893d50d88c2c5dd66191252980"
+    sha256 mojave:        "80bb92867bb86086d301658ff182b145699c3baa14cbfe83dcb9da48598b0237"
+    sha256 x86_64_linux:  "a14f5b6bda7cb3ca845771ffa0ea931ecf45d8877878403e2f6d72dce0d0f238"
   end
 
   depends_on "autoconf" => :build
@@ -33,7 +32,14 @@ class Gnutls < Formula
   depends_on "unbound"
 
   on_linux do
-    depends_on "autogen" => :build
+    depends_on "autogen"
+
+    resource "cacert" do
+      # homepage "http://curl.haxx.se/docs/caextract.html"
+      url "https://curl.haxx.se/ca/cacert-2020-01-01.pem"
+      mirror "https://gist.githubusercontent.com/dawidd6/16d94180a019f31fd31bc679365387bc/raw/ef02c78b9d6427585d756528964d18a2b9e318f7/cacert-2020-01-01.pem"
+      sha256 "adf770dfd574a0d6026bfaa270cb6879b063957177a991d453ff1d302c02081f"
+    end
   end
 
   def install
@@ -66,15 +72,26 @@ class Gnutls < Formula
   end
 
   def post_install
+    on_macos(&method(:macos_post_install))
+    on_linux(&method(:linux_post_install))
+  end
+
+  def macos_post_install
+    ohai "Regenerating CA certificate bundle from keychain, this may take a while..."
+
     keychains = %w[
+      /Library/Keychains/System.keychain
       /System/Library/Keychains/SystemRootCertificates.keychain
     ]
 
-    certs_list = `security find-certificate -a -p #{keychains.join(" ")}`
-    certs = certs_list.scan(/-----BEGIN CERTIFICATE-----.*?-----END CERTIFICATE-----/m)
+    certs_list = `/usr/bin/security find-certificate -a -p #{keychains.join(" ")}`
+    certs = certs_list.scan(
+      /-----BEGIN CERTIFICATE-----.*?-----END CERTIFICATE-----/m,
+    )
 
+    # Check that the certificate has not expired
     valid_certs = certs.select do |cert|
-      IO.popen("openssl x509 -inform pem -checkend 0 -noout", "w") do |openssl_io|
+      IO.popen("openssl x509 -inform pem -checkend 0 -noout &>/dev/null", "w") do |openssl_io|
         openssl_io.write(cert)
         openssl_io.close_write
       end
@@ -82,12 +99,39 @@ class Gnutls < Formula
       $CHILD_STATUS.success?
     end
 
+    # Check that the certificate is trusted in keychain
+    trusted_certs = begin
+      tmpfile = Tempfile.new
+
+      valid_certs.select do |cert|
+        tmpfile.rewind
+        tmpfile.write cert
+        tmpfile.truncate cert.size
+        tmpfile.flush
+        IO.popen("/usr/bin/security verify-cert -l -L -R offline -c #{tmpfile.path} &>/dev/null")
+
+        $CHILD_STATUS.success?
+      end
+    ensure
+      tmpfile&.close!
+    end
+
     pkgetc.mkpath
-    (pkgetc/"cert.pem").atomic_write(valid_certs.join("\n"))
+    (pkgetc/"cert.pem").atomic_write(trusted_certs.join("\n") << "\n")
 
     # Touch gnutls.go to avoid Guile recompilation.
     # See https://github.com/Homebrew/homebrew-core/pull/60307#discussion_r478917491
     touch "#{lib}/guile/3.0/site-ccache/gnutls.go"
+  end
+
+  def linux_post_install
+    # Download and install cacert.pem from curl.haxx.se
+    cacert = resource("cacert")
+    cacert.fetch
+
+    rm_f pkgetc/"cert.pem"
+    filename = Pathname.new(cacert.url).basename
+    pkgetc.install cacert.files(filename => "cert.pem")
   end
 
   def caveats
@@ -95,7 +139,7 @@ class Gnutls < Formula
       If you are going to use the Guile bindings you will need to add the following
       to your .bashrc or equivalent in order for Guile to find the TLS certificates
       database:
-        export GUILE_TLS_CERTIFICATE_DIRECTORY=/usr/local/etc/gnutls/
+        export GUILE_TLS_CERTIFICATE_DIRECTORY=#{pkgetc}/
     EOS
   end
 

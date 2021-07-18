@@ -2,17 +2,18 @@ class Graphviz < Formula
   desc "Graph visualization software from AT&T and Bell Labs"
   homepage "https://www.graphviz.org/"
   url "https://gitlab.com/graphviz/graphviz.git",
-      tag:      "2.46.1",
-      revision: "5156ae3ff298dd18dcebd6b7cf4c11f5d23d03fc"
+      tag:      "2.47.3",
+      revision: "887cd2207e6858ff2c0fe6e461dd309a435c8d5a"
   license "EPL-1.0"
   version_scheme 1
   head "https://gitlab.com/graphviz/graphviz.git"
 
   bottle do
-    sha256 arm64_big_sur: "0a5b42c04e033935915b1655155bbf5920d5c85ba03c0ae0c8cffcf9fb290333"
-    sha256 big_sur:       "e5c6de435b4890fe00d961e7d28b2c1ba8f7e2999937e56e24947350444dccbc"
-    sha256 catalina:      "ba5fd51f1c318e395ecbd4749e4a6ac54b759e835e62c77918aaece37da90c04"
-    sha256 mojave:        "fa46b3b5df53615e1c2f81f2060fa2cb2a556f90bd75d6b86f39f16932106985"
+    sha256 arm64_big_sur: "11e293a72d98ed531b5d8ee2b9e644acd0d4755750f7cdb2474c55c8d4b7692d"
+    sha256 big_sur:       "beeecb70dee18e74a42f5d511381a1b17b946a95f821ea18b489071d07f279b4"
+    sha256 catalina:      "432e8fc6232e6bd5c8d9d31c80a2cb9b1aab453ef13ea7b109043c117db2271c"
+    sha256 mojave:        "5327470d2ef23770fc7227c82f527ed3f5cd41c6d418cc2ffd167b8f05423204"
+    sha256 x86_64_linux:  "a003f4dbdcbe253ac66be60b6115a541155e3aa7d87cf922683f0fc7a8d7d608"
   end
 
   depends_on "autoconf" => :build
@@ -40,6 +41,7 @@ class Graphviz < Formula
       --prefix=#{prefix}
       --disable-php
       --disable-swig
+      --disable-tcl
       --with-quartz
       --without-freetype2
       --without-gdk

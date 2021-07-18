@@ -1,8 +1,8 @@
 class Dar < Formula
   desc "Backup directory tree and files"
   homepage "http://dar.linux.free.fr/doc/index.html"
-  url "https://downloads.sourceforge.net/project/dar/dar/2.6.13/dar-2.6.13.tar.gz"
-  sha256 "3fea9ff9e55fb9827e17a080de7d1a2605b82c2320c0dec969071efefdbfd097"
+  url "https://downloads.sourceforge.net/project/dar/dar/2.7.1/dar-2.7.1.tar.gz"
+  sha256 "76dade8adbeb817ffc78bf592c8200487ab5650234cf539539a9cbc5d346beef"
   license "GPL-2.0-or-later"
 
   livecheck do
@@ -11,10 +11,9 @@ class Dar < Formula
   end
 
   bottle do
-    sha256 cellar: :any, big_sur:     "7a7fc7d0cc33e3997ad565ce07648ed50e10b29195c56ab13de3963e5a22271f"
-    sha256 cellar: :any, catalina:    "e3c5b475201e6916f344653c86357a54cdd5bf081a6b5ecc72e1f8cea67bbb8d"
-    sha256 cellar: :any, mojave:      "3297d386d1572cf82676d96809cea6b54a4338c1a51213c6c059c81206b98c5b"
-    sha256 cellar: :any, high_sierra: "7f44bc4ac5e17f47705f8a338517432690dadcf6e6f9e7cce502624d4849c6ca"
+    sha256 cellar: :any, big_sur:  "89f145997e301eb51ed6fadbd3c0583113499204f56fdf9032b016c4020fa947"
+    sha256 cellar: :any, catalina: "af73f8c79627e84c8d36cb079dfd598d943278f0b73fd68b873f45872124409c"
+    sha256 cellar: :any, mojave:   "ef0298ac3f4143f7b15d3ca7a0e2e873d6ee0b28cb1d0066c9ff46e4fd2144a6"
   end
 
   depends_on "upx" => :build
@@ -22,7 +21,8 @@ class Dar < Formula
   depends_on "lzo"
 
   def install
-    ENV.cxx11
+    # Need to set due to upstream issue: https://github.com/Edrusb/DAR/issues/29
+    ENV.append "CXXFLAGS", "-std=c++14"
 
     system "./configure", "--prefix=#{prefix}",
                           "--disable-build-html",

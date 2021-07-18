@@ -35,13 +35,18 @@ class SwiProlog < Formula
       system "cmake", "..", *std_cmake_args,
                       "-DSWIPL_PACKAGES_JAVA=OFF",
                       "-DSWIPL_PACKAGES_X=OFF",
-                      "-DCMAKE_INSTALL_PREFIX=#{libexec}",
-                      "-DCMAKE_C_COMPILER=/usr/bin/clang",
-                      "-DCMAKE_CXX_COMPILER=/usr/bin/clang++"
+                      "-DCMAKE_INSTALL_PREFIX=#{libexec}"
       system "make", "install"
     end
 
     bin.write_exec_script Dir["#{libexec}/bin/*"]
+
+    on_linux do
+      inreplace "libexec/lib/swipl/bin/x86_64-linux/swipl-ld",
+        HOMEBREW_SHIMS_PATH/"linux/super/", "/usr/bin/"
+      inreplace "libexec/lib/swipl/lib/x86_64-linux/libswipl.so.#{version}",
+        HOMEBREW_SHIMS_PATH/"linux/super/", "/usr/bin/"
+    end
   end
 
   test do

@@ -2,8 +2,8 @@ class Mmctl < Formula
   desc "Remote CLI tool for Mattermost server"
   homepage "https://github.com/mattermost/mmctl"
   url "https://github.com/mattermost/mmctl.git",
-      tag:      "v5.32.0",
-      revision: "48cfd91701859a4e59ea2b01b48e0a62ab083c27"
+      tag:      "v5.36.0",
+      revision: "a3c6ff14a9f44dc847fa629a9e8ab516b8b883ec"
   license "Apache-2.0"
   head "https://github.com/mattermost/mmctl.git"
 
@@ -13,10 +13,11 @@ class Mmctl < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "7168739f261a600ff2014c1842e8453bf82c9a3d5c5a0a5973473157a627d223"
-    sha256 cellar: :any_skip_relocation, big_sur:       "9b254d989f1d22fd8682e4823a40dd3029961108f3336a331d06407450484e43"
-    sha256 cellar: :any_skip_relocation, catalina:      "e54088a99646a73107a9636d23bdfceec98eaf1ea65f6252e0ca034d90c4735a"
-    sha256 cellar: :any_skip_relocation, mojave:        "a2b7f4996311ae681a133129c582d40e07b93dda66959e064cac3e9c87e94690"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "2100b6ed7798a993f34233c4b6b58759c83ce0f96b3c39a66d192d6a89c3d570"
+    sha256 cellar: :any_skip_relocation, big_sur:       "1e14c73707eb41c21ad5b9b6aea1850b56b71b79dd7fa6e8ccd8ec48e888c162"
+    sha256 cellar: :any_skip_relocation, catalina:      "9c7223fc02910173dabd773352af3617e92e1cfacc37337e43f5606cfeeef13d"
+    sha256 cellar: :any_skip_relocation, mojave:        "4db09ecf5831227464cf41b6bd512e37a079406c124d32ec93b4ce14987772cd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1b588231aa08d4972a9aed9e0d57d022090dcfb295a2a32a8c17cb766d561ea2"
   end
 
   depends_on "go" => :build
@@ -40,8 +41,8 @@ class Mmctl < Formula
 
   test do
     output = pipe_output("#{bin}/mmctl help 2>&1")
-    assert_no_match(/.*No such file or directory.*/, output)
-    assert_no_match(/.*command not found.*/, output)
+    refute_match(/.*No such file or directory.*/, output)
+    refute_match(/.*command not found.*/, output)
     assert_match(/.*mmctl \[command\].*/, output)
   end
 end

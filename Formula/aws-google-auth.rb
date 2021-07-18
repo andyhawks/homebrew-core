@@ -6,21 +6,20 @@ class AwsGoogleAuth < Formula
   url "https://files.pythonhosted.org/packages/17/42/b466b9376f88f27d4d251b2e61194879a840b7be0c3a6808bc20381b2d5e/aws-google-auth-0.0.37.tar.gz"
   sha256 "0cc76e88ac188a26a484faffb21f1c7f31c0c56932aa30e6772e17245d0eb7cc"
   license "MIT"
-  revision 1
+  revision 3
   head "https://github.com/cevoaustralia/aws-google-auth.git"
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "8918c50c8e591f42b1a1fb0e941c531bcda1066420bbaa0809ea25382813c17d"
-    sha256 cellar: :any, big_sur:       "e188f97fd6a29f327951b32ebfd67e369e88343d601fd8f97d6c0ad7e2e1b2a2"
-    sha256 cellar: :any, catalina:      "758d857031ff550cacb3fabeecea7d417eb0211d846ad771c809bb0dcb1b1e6d"
-    sha256 cellar: :any, mojave:        "ae52982f6a6feba48846321484581d3c2959b05f2e95e886cb0ff8620adf3f52"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "92c6a08357e8f2b971d3a3c086fd481ebbcabda69c65b9abff041dfcaa4ef298"
+    sha256 cellar: :any_skip_relocation, big_sur:       "7a0d6cb9a8776d56e1a8c990d244a33c8740016e6a7ad7f2e6737c6870c57e42"
+    sha256 cellar: :any_skip_relocation, catalina:      "5938adc2d456a0c4c1efaea600e23b73eb3645267664271548da6cf4ffe91919"
+    sha256 cellar: :any_skip_relocation, mojave:        "38183d79bd35c9010bc795a0e3bb4d4362b70515049e39ac31c8c2638cd8daee"
   end
 
   depends_on "rust" => :build
-  depends_on "freetype"
-  depends_on "jpeg"
+  depends_on "pillow"
+  depends_on "python-tabulate"
   depends_on "python@3.9"
-  depends_on "tcl-tk"
 
   uses_from_macos "libffi"
   uses_from_macos "libxml2"
@@ -36,18 +35,18 @@ class AwsGoogleAuth < Formula
   end
 
   resource "boto3" do
-    url "https://files.pythonhosted.org/packages/e4/c3/ea17ed52138ba29aa6cdddec791fcf8865d54c26c74444a60929247069e5/boto3-1.17.24.tar.gz"
-    sha256 "bf4a321da7dbe0c5a20380ff9f6a8a4e2e135e72a40348890122a197368b4421"
+    url "https://files.pythonhosted.org/packages/31/4c/879d528f74a3288a03cc664c5e1618a0f71e835a731a7c2594165823c4a3/boto3-1.17.104.tar.gz"
+    sha256 "055f9dc07f95f202a4dc25196a3a9f1e2f137171ee364cf980e4673de75fb529"
   end
 
   resource "botocore" do
-    url "https://files.pythonhosted.org/packages/5a/19/d40be5a0a2484744deedc796fbf61996a55e248ed4f89916c6900350a456/botocore-1.20.24.tar.gz"
-    sha256 "9398bcd9491442aa559a7c111b96004bb06af612e53baa7165b0a646bb43534d"
+    url "https://files.pythonhosted.org/packages/2b/53/bf0f05a3981ed0c366b25777c72136d4d6f397c104d8568b7899a640a41a/botocore-1.20.104.tar.gz"
+    sha256 "23aa3238c004319f78423eb8cbba2813b62ee64d0e3bab04e0a00e067f99542a"
   end
 
   resource "certifi" do
-    url "https://files.pythonhosted.org/packages/06/a9/cd1fd8ee13f73a4d4f491ee219deeeae20afefa914dfb4c130cfc9dc397a/certifi-2020.12.5.tar.gz"
-    sha256 "1a4995114262bffbc2413b159f2a1a480c969de6e6eb13ee966d470af86af59c"
+    url "https://files.pythonhosted.org/packages/6d/78/f8db8d57f520a54f0b8a438319c342c61c22759d8f9a1cd2e2180b5e5ea9/certifi-2021.5.30.tar.gz"
+    sha256 "2bbf76fd432960138b3ef6dda3dde0544f27cbf8546c458e60baf371917ba9ee"
   end
 
   resource "chardet" do
@@ -71,8 +70,8 @@ class AwsGoogleAuth < Formula
   end
 
   resource "importlib-metadata" do
-    url "https://files.pythonhosted.org/packages/48/18/08eaa583eb21602e86e32d534fa7f40159774566037e60a69822b10ef3ad/importlib_metadata-3.7.2.tar.gz"
-    sha256 "18d5ff601069f98d5d605b6a4b50c18a34811d655c55548adc833e687289acde"
+    url "https://files.pythonhosted.org/packages/0e/75/92eed8e2ae8cd78f03c8ab9faf26e561482f3453a6f271a81e792178dd54/importlib_metadata-4.6.0.tar.gz"
+    sha256 "4a5611fea3768d3d967c447ab4e93f567d95db92225b43b7b238dbfb855d70bb"
   end
 
   resource "jmespath" do
@@ -81,8 +80,8 @@ class AwsGoogleAuth < Formula
   end
 
   resource "keyring" do
-    url "https://files.pythonhosted.org/packages/e8/3e/4daf55c21dc38dfa39a5780fb1c9a15dbbe8d680a715b0c81c29be51662c/keyring-23.0.0.tar.gz"
-    sha256 "237ff44888ba9b3918a7dcb55c8f1db909c95b6f071bfb46c6918f33f453a68a"
+    url "https://files.pythonhosted.org/packages/b0/b5/b27458e1d2adf2a11c6e95c67ac63f828e96fe7e166132e5dacbe03e88c0/keyring-23.0.1.tar.gz"
+    sha256 "045703609dd3fccfcdb27da201684278823b72af515aedec1a8515719a038cb8"
   end
 
   resource "keyrings.alt" do
@@ -91,13 +90,8 @@ class AwsGoogleAuth < Formula
   end
 
   resource "lxml" do
-    url "https://files.pythonhosted.org/packages/db/f7/43fecb94d66959c1e23aa53d6161231dca0e93ec500224cf31b3c4073e37/lxml-4.6.2.tar.gz"
-    sha256 "cd11c7e8d21af997ee8079037fff88f16fda188a9776eb4b81c7e4c9c0a7d7fc"
-  end
-
-  resource "Pillow" do
-    url "https://files.pythonhosted.org/packages/60/f0/dd2eb7911f948bf529f58f0c7931f6f6466f711bd6f1d81a69dc4edd4e2a/Pillow-8.1.2.tar.gz"
-    sha256 "b07c660e014852d98a00a91adfbe25033898a9d90a8f39beb2437d22a203fc44"
+    url "https://files.pythonhosted.org/packages/e5/21/a2e4517e3d216f0051687eea3d3317557bde68736f038a3b105ac3809247/lxml-4.6.3.tar.gz"
+    sha256 "39b78571b3b30645ac77b95f7c69d1bffc4cf8c3b157c435a34da72e78c82468"
   end
 
   resource "python-dateutil" do
@@ -116,23 +110,18 @@ class AwsGoogleAuth < Formula
   end
 
   resource "s3transfer" do
-    url "https://files.pythonhosted.org/packages/08/e1/3ee2096ebaeeb8c186d20ed16c8faf4a503913e5c9a0e14cd6b8ffc405a3/s3transfer-0.3.4.tar.gz"
-    sha256 "7fdddb4f22275cf1d32129e21f056337fd2a80b6ccef1664528145b72c49e6d2"
+    url "https://files.pythonhosted.org/packages/27/90/f467e516a845cf378d85f0a51913c642e31e2570eb64b352c4dc4c6cbfc7/s3transfer-0.4.2.tar.gz"
+    sha256 "cb022f4b16551edebbb31a377d3f09600dbada7363d8c5db7976e7f47732e1b2"
   end
 
   resource "six" do
-    url "https://files.pythonhosted.org/packages/6b/34/415834bfdafca3c5f451532e8a8d9ba89a21c9743a0c59fbd0205c7f9426/six-1.15.0.tar.gz"
-    sha256 "30639c035cdb23534cd4aa2dd52c3bf48f06e5f4a941509c8bafd8ce11080259"
+    url "https://files.pythonhosted.org/packages/71/39/171f1c67cd00715f190ba0b100d606d440a28c93c7714febeca8b79af85e/six-1.16.0.tar.gz"
+    sha256 "1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"
   end
 
   resource "soupsieve" do
-    url "https://files.pythonhosted.org/packages/54/b9/1584ee0cd971ea935447c87bbc9d195d981feec446dd0af799d9d95c9d86/soupsieve-2.2.tar.gz"
-    sha256 "407fa1e8eb3458d1b5614df51d9651a1180ea5fedf07feb46e45d7e25e6d6cdd"
-  end
-
-  resource "tabulate" do
-    url "https://files.pythonhosted.org/packages/ae/3d/9d7576d94007eaf3bb685acbaaec66ff4cdeb0b18f1bf1f17edbeebffb0a/tabulate-0.8.9.tar.gz"
-    sha256 "eb1d13f25760052e8931f2ef80aaf6045a6cceb47514db8beab24cded16f13a7"
+    url "https://files.pythonhosted.org/packages/c8/3f/e71d92e90771ac2d69986aa0e81cf0dfda6271e8483698f4847b861dd449/soupsieve-2.2.1.tar.gz"
+    sha256 "052774848f448cf19c7e959adf5566904d525f33a3f8b6ba6f6f8f26ec7de0cc"
   end
 
   resource "tzlocal" do
@@ -141,8 +130,8 @@ class AwsGoogleAuth < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/d7/8d/7ee68c6b48e1ec8d41198f694ecdc15f7596356f2ff8e6b1420300cf5db3/urllib3-1.26.3.tar.gz"
-    sha256 "de3eedaad74a2683334e282005cd8d7f22f4d55fa690a2a1020a416cb0a47e73"
+    url "https://files.pythonhosted.org/packages/4f/5a/597ef5911cb8919efe4d86206aa8b2658616d676a7088f0825ca08bd7cb8/urllib3-1.26.6.tar.gz"
+    sha256 "f57b4c16c62fa2760b7e3d97c35b255512fb6b59a259730f36ba32ce9f8e342f"
   end
 
   resource "zipp" do
@@ -188,41 +177,13 @@ class AwsGoogleAuth < Formula
   def install
     # Fix "ld: file not found: /usr/lib/system/libsystem_darwin.dylib" for lxml
     ENV["SDKROOT"] = MacOS.sdk_path if MacOS.version == :sierra
-
-    venv = virtualenv_create(libexec, "python3")
-
-    resource("Pillow").stage do
-      inreplace "setup.py" do |s|
-        s.gsub! "openjpeg.h",
-          "probably_not_a_header_called_this_eh.h"
-        on_macos do
-          s.gsub! "ZLIB_ROOT = None",
-            "ZLIB_ROOT = ('#{MacOS.sdk_path_if_needed}/usr/lib', '#{MacOS.sdk_path_if_needed}/usr/include')"
-        end
-        on_linux do
-          s.gsub! "ZLIB_ROOT = None",
-                  "ZLIB_ROOT = ('#{Formula["zlib"].opt_prefix}/lib', '#{Formula["zlib"].opt_prefix}/include')"
-        end
-        s.gsub! "JPEG_ROOT = None",
-          "JPEG_ROOT = ('#{Formula["jpeg"].opt_prefix}/lib', '#{Formula["jpeg"].opt_prefix}/include')"
-        s.gsub! "FREETYPE_ROOT = None",
-          "FREETYPE_ROOT = ('#{Formula["freetype"].opt_prefix}/lib', '#{Formula["freetype"].opt_prefix}/include')"
-      end
-
-      venv.pip_install Pathname.pwd
-    end
-
-    res = resources.map(&:name).to_set - ["Pillow"]
-
-    res.each do |r|
-      venv.pip_install resource(r)
-    end
-
-    venv.pip_install_and_link buildpath
+    virtualenv_install_with_resources
   end
 
   test do
-    assert_match "Invalid username or password",
-      shell_output("echo 'foobar' | #{bin}/aws-google-auth -u foo -I C01111111 -S 111111111111 2>&1", 1)
+    auth_process = IO.popen "#{bin}/aws-google-auth"
+    sleep 3
+    Process.kill "TERM", auth_process.pid
+    assert_match "AWS Region:", auth_process.read
   end
 end

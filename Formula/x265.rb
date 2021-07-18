@@ -1,17 +1,18 @@
 class X265 < Formula
   desc "H.265/HEVC encoder"
   homepage "https://bitbucket.org/multicoreware/x265_git"
-  url "https://bitbucket.org/multicoreware/x265_git/get/3.4.tar.gz"
-  sha256 "7f2771799bea0f53b5ab47603d5bea46ea2a221e047a7ff398115e9976fd5f86"
+  url "https://bitbucket.org/multicoreware/x265_git/get/3.5.tar.gz"
+  sha256 "5ca3403c08de4716719575ec56c686b1eb55b078c0fe50a064dcf1ac20af1618"
   license "GPL-2.0-only"
-  revision 2
   head "https://bitbucket.org/multicoreware/x265_git.git"
 
   bottle do
-    sha256 arm64_big_sur: "89918f59466d00820cd7e978c89b405959d082f108db2382bd76fe2bdedcfc5c"
-    sha256 big_sur:       "8db84444f732498e1f1e3f8564b3091360ebb277a9c7f5d0bd457893a194f5a6"
-    sha256 catalina:      "c7be7296406476bf93e13580eab209646680bafaa5fb46d31cf491ef3e3f0a25"
-    sha256 mojave:        "d6bce1ae70ea86a7203a42ab807e1a2334550a9b4af5ca7ebb9a0e89139c8444"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_big_sur: "adc617eed2e065af669994fb5b538195fd46db4ac7b13c7ca2490dc8abaf6466"
+    sha256 cellar: :any,                 big_sur:       "55bb46a5dc1924e59b7fa7bc800a21c0cf21355e48cb38b941d8e786427c70a0"
+    sha256 cellar: :any,                 catalina:      "5e5bc106e1cf971a176dd5b37a61d28769e353f81102c011b4230cc8732eca7a"
+    sha256 cellar: :any,                 mojave:        "c61ebdf9dcd4aedf5da2a7eb2b3a5154fd355c105a19a0471d43a3aa67f3cb88"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c80f18988caea25e95ca87dd648f5ff8b0856e24d26adc8d68ca68cc6d4faabf"
   end
 
   depends_on "cmake" => :build
@@ -24,7 +25,7 @@ class X265 < Formula
       -DLINKED_12BIT=ON
       -DEXTRA_LINK_FLAGS=-L.
       -DEXTRA_LIB=x265_main10.a;x265_main12.a
-      -DCMAKE_INSTALL_RPATH=#{lib}
+      -DCMAKE_INSTALL_RPATH=#{rpath}
     ]
     high_bit_depth_args = std_cmake_args + %w[
       -DHIGH_BIT_DEPTH=ON -DEXPORT_C_API=OFF
@@ -48,8 +49,18 @@ class X265 < Formula
       system "cmake", buildpath/"source", *args
       system "make"
       mv "libx265.a", "libx265_main.a"
-      system "libtool", "-static", "-o", "libx265.a", "libx265_main.a",
-                        "libx265_main10.a", "libx265_main12.a"
+
+      on_macos do
+        system "libtool", "-static", "-o", "libx265.a", "libx265_main.a",
+                          "libx265_main10.a", "libx265_main12.a"
+      end
+
+      on_linux do
+        system "ar", "cr", "libx265.a", "libx265_main.a", "libx265_main10.a",
+                           "libx265_main12.a"
+        system "ranlib", "libx265.a"
+      end
+
       system "make", "install"
     end
   end

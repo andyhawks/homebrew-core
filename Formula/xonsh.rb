@@ -6,13 +6,14 @@ class Xonsh < Formula
   url "https://files.pythonhosted.org/packages/39/af/ba93eb37f0340c3f225dcb45858aa6169c05b03f9044c528fe2e770952a0/xonsh-0.9.27.tar.gz"
   sha256 "82aa7c50eb161c74e0b12c4f9c772d228a1e90b21afb948c0dc9dfb2b63f5fd5"
   license "BSD-2-Clause-Views"
-  head "https://github.com/xonsh/xonsh.git"
+  head "https://github.com/xonsh/xonsh.git", branch: "main"
 
   bottle do
     sha256 cellar: :any_skip_relocation, arm64_big_sur: "a789ba640efa248ae6dce5fab63d43e094e50fe2a3d6fab12a46aee3b0e8431f"
     sha256 cellar: :any_skip_relocation, big_sur:       "84a20d6b486a3bc5ce800e0980763ecefe79fd5efe1458553e5aef9581118397"
     sha256 cellar: :any_skip_relocation, catalina:      "ef5af547e8fdfa464c0ad814fbf0a880792ee58472cecdc5e20f66ea56110a57"
     sha256 cellar: :any_skip_relocation, mojave:        "47dbc76b608d3da25a4ab5dd911fcd06447571172a18a68b625619f39d5b7f83"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f05be843cb6f0c783a4bd1faaba44511c104b494979a308c35666a5b2dba08d3"
   end
 
   depends_on "python@3.9"

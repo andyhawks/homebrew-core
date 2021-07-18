@@ -3,8 +3,9 @@ class Coccinelle < Formula
   homepage "http://coccinelle.lip6.fr/"
   url "https://github.com/coccinelle/coccinelle.git",
       tag:      "1.1.0",
-      revision: "e84d3ddc7d4131b7e7e70c29d49eca09d35fabb6"
+      revision: "25e7cee77b4b6efbabf60ffaa8bccd72500ba8bd"
   license "GPL-2.0-only"
+  revision 1
   head "https://github.com/coccinelle/coccinelle.git"
 
   livecheck do
@@ -13,25 +14,42 @@ class Coccinelle < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "999cd887edc470102f1e318fbe59ad68a60786a8447a8e55ee453b5fe36f5008"
-    sha256 cellar: :any, big_sur:       "48c2002495d02950c1f6caa2b330d435d57f20ecda6a80b3912df5a11ae0c3b0"
-    sha256 cellar: :any, catalina:      "3705b898ce264c250741a0b464e0e87b53dcc658aa46ca82ae2e59a7bd19a00c"
-    sha256 cellar: :any, mojave:        "3bd2cb4ba4904b6eb84961a282d19ee8edb725af1ffd3b85ec378aaa873df8b0"
+    rebuild 1
+    sha256 cellar: :any, arm64_big_sur: "73d90cfa6837ada22b780c32a9140f390f4c1edf75efaead1611451e499af0a2"
+    sha256 cellar: :any, big_sur:       "93341040702939158171021a18b27284b50c44b61df0b23aa61f9bf86cba771c"
+    sha256 cellar: :any, catalina:      "3033a6317a08b4816a46c61d2b07ceeabde0a24ff226634ce4c206af2b718b7a"
+    sha256 cellar: :any, mojave:        "ee53ae5fa8349a8d1c26bc21fdfd073586c83cf0831eec4880558b0c5f743a68"
   end
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
   depends_on "hevea" => :build
+  depends_on "ocaml-findlib" => :build
   depends_on "opam" => :build
+  depends_on "pkg-config" => :build
   depends_on "ocaml"
+  depends_on "pcre"
+
+  # Bootstap resource for Ocaml 4.12 compatibility.
+  # Remove when Coccinelle supports Ocaml 4.12 natively
+  resource "stdcompat" do
+    url "https://github.com/thierry-martinez/stdcompat/releases/download/v15/stdcompat-15.tar.gz"
+    sha256 "5e746f68ffe451e7dabe9d961efeef36516b451f35a96e174b8f929a44599cf5"
+  end
 
   def install
+    resource("stdcompat").stage do
+      system "./configure", "--prefix=#{buildpath}/bootstrap"
+      ENV.deparallelize { system "make" }
+      system "make", "install"
+    end
+    ENV.prepend_path "OCAMLPATH", buildpath/"bootstrap/lib"
+
     Dir.mktmpdir("opamroot") do |opamroot|
       ENV["OPAMROOT"] = opamroot
       ENV["OPAMYES"] = "1"
       ENV["OPAMVERBOSE"] = "1"
       system "opam", "init", "--no-setup", "--disable-sandboxing"
-      system "opam", "install", "ocamlfind"
       system "./autogen"
       system "opam", "config", "exec", "--", "./configure",
                             "--disable-dependency-tracking",

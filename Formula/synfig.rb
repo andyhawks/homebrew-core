@@ -1,11 +1,12 @@
 class Synfig < Formula
   desc "Command-line renderer"
   homepage "https://synfig.org/"
-  url "https://downloads.sourceforge.net/project/synfig/releases/1.4.0/source/synfig-1.4.0.tar.gz"
-  mirror "https://github.com/synfig/synfig/releases/download/v1.4.0/synfig-1.4.0.tar.gz"
-  sha256 "7f36d57eba9dc959e1deae89e6908585a08db7f2d9399915a46a9eff33080c9c"
+  # NOTE: Please keep these values in sync with etl.rb when updating.
+  url "https://downloads.sourceforge.net/project/synfig/releases/1.4.1/synfig-1.4.1.tar.gz"
+  mirror "https://github.com/synfig/synfig/releases/download/v1.4.1/synfig-1.4.1.tar.gz"
+  sha256 "f90f1dcff1a409bbe2bfbb2cf42b7019cf735bec3223722db2feba6e198d1bc1"
   license "GPL-3.0-or-later"
-  revision 2
+  revision 4
   head "https://svn.code.sf.net/p/synfig/code/"
 
   livecheck do
@@ -14,9 +15,10 @@ class Synfig < Formula
   end
 
   bottle do
-    sha256 big_sur:  "4929fa6d59d28d1a63ec725f6a11b5b27f828706d9d2548fa900fc5c2ac5fda1"
-    sha256 catalina: "45b2b11cbe0d6457530d59cc32dd6fa41dd788462577caef9036c75911e0a99e"
-    sha256 mojave:   "1b1702081c0fb7276fba94dd473d1eee8cf17e74c0b4cf85612963396d1d65c8"
+    sha256 arm64_big_sur: "015a7a0d3bc4c03bab892a7f61185d3743ccf259221986ad2ce522768cec834e"
+    sha256 big_sur:       "fb07afb2d55b011f10916a314cb26d640b8b2fe61312181d490b281f65fbd1aa"
+    sha256 catalina:      "0a58958fe741c068768e401541fb051615f9ecc190a983b37e5921a3a644d439"
+    sha256 mojave:        "50b62cfc4d6c2d6c1a2fecbbbdb7348a312adbee8d882e41fc2d8aef1f542893"
   end
 
   depends_on "intltool" => :build
@@ -88,9 +90,7 @@ class Synfig < Formula
       -I#{libsigcxx.opt_lib}/sigc++-2.0/include
       -I#{libxmlxx.opt_include}/libxml++-2.6
       -I#{libxmlxx.opt_lib}/libxml++-2.6/include
-      -I#{mlt.opt_include}
-      -I#{mlt.opt_include}/mlt
-      -I#{mlt.opt_include}/mlt++
+      -I#{mlt.opt_include}/mlt-7
       -I#{pango.opt_include}/pango-1.0
       -I#{pixman.opt_include}/pixman-1
       -D_REENTRANT
@@ -110,8 +110,8 @@ class Synfig < Formula
       -lglibmm-2.4
       -lgobject-2.0
       -lintl
-      -lmlt
-      -lmlt++
+      -lmlt-7
+      -lmlt++-7
       -lpango-1.0
       -lpangocairo-1.0
       -lpthread

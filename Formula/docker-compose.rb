@@ -3,38 +3,35 @@ class DockerCompose < Formula
 
   desc "Isolated development environments using Docker"
   homepage "https://docs.docker.com/compose/"
-  url "https://files.pythonhosted.org/packages/92/29/303a71a1bf4522d6e36baa14d48f286d75da545777d8510b9f4085686ee3/docker-compose-1.28.5.tar.gz"
-  sha256 "b3ff8f0352eb4055c4c483cb498aeff7c90195fa679f3caf7098a2d6fa6030e5"
+  url "https://files.pythonhosted.org/packages/1f/6a/f4703077123ad0c90026985cb9780c0703922c2a5451ab93fb63511d915a/docker-compose-1.29.2.tar.gz"
+  sha256 "4c8cd9d21d237412793d18bd33110049ee9af8dab3fe2c213bbd0733959b09b7"
   license "Apache-2.0"
   head "https://github.com/docker/compose.git"
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "b2aa9493fda75a1044fee7c321394b4d884fe72e6658c7523712659a0549d583"
-    sha256 cellar: :any, big_sur:       "da80757f384997366c44221500a223cd169bbe002fc2676727b43056eca26ca8"
-    sha256 cellar: :any, catalina:      "ff772da8c719b4f7c0ad0aae4ddf625c6eee12a8bc5c56bf864dde3ee435752f"
-    sha256 cellar: :any, mojave:        "dd017cc11c4ac1242835aed3dd7da723244fb86f10e1c88e3a2ee319c674ab97"
+    sha256 cellar: :any,                 arm64_big_sur: "67d4e74c8293c978dd8e4133fedbd138d388de7f073768bf427d42a62f98e384"
+    sha256 cellar: :any,                 big_sur:       "60d80060410d0556a0bd72a9f632d79fb54e6a63c99aa9c84bb952a558b7f0e2"
+    sha256 cellar: :any,                 catalina:      "1b493a40b98311fa83c833cc935bbc6a9e0e3d60a251b6559fdddd9e071b9d30"
+    sha256 cellar: :any,                 mojave:        "8db2876a849e55de80f69c34f7c13fbf5fd5f7e547406738f46841db5fb3691a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "307d940f475b9f12d5c2eaab8a6dee986fbcf6b44bd74cac4a6ca12acaf4bce2"
   end
 
   depends_on "rust" => :build
-
   depends_on "libyaml"
   depends_on "python@3.9"
 
   uses_from_macos "libffi"
 
+  conflicts_with "docker-compose-completion", because: "docker-compose already includes completion scripts"
+
   resource "attrs" do
-    url "https://files.pythonhosted.org/packages/f0/cb/80a4a274df7da7b8baf083249b0890a0579374c3d74b5ac0ee9291f912dc/attrs-20.3.0.tar.gz"
-    sha256 "832aa3cde19744e49938b91fea06d69ecb9e649c93ba974535d08ad92164f700"
+    url "https://files.pythonhosted.org/packages/ed/d6/3ebca4ca65157c12bd08a63e20ac0bdc21ac7f3694040711f9fd073c0ffb/attrs-21.2.0.tar.gz"
+    sha256 "ef6aaac3ca6cd92904cdd0d83f629a15f18053ec84e6432106f7a4d04ae4f5fb"
   end
 
   resource "bcrypt" do
     url "https://files.pythonhosted.org/packages/d8/ba/21c475ead997ee21502d30f76fd93ad8d5858d19a3fad7cd153de698c4dd/bcrypt-3.2.0.tar.gz"
     sha256 "5b93c1726e50a93a033c36e5ca7fdcd29a5c7395af50a6892f5d9e7c6cfbfb29"
-  end
-
-  resource "cached-property" do
-    url "https://files.pythonhosted.org/packages/61/2c/d21c1c23c2895c091fa7a91a54b6872098fea913526932d21902088a7c41/cached-property-1.5.2.tar.gz"
-    sha256 "9fa5755838eecbb2d234c3aa390bd80fbd3ac6b6869109bfc1b499f7bd89a130"
   end
 
   resource "certifi" do
@@ -53,8 +50,8 @@ class DockerCompose < Formula
   end
 
   resource "cryptography" do
-    url "https://files.pythonhosted.org/packages/fa/2d/2154d8cb773064570f48ec0b60258a4522490fcb115a6c7c9423482ca993/cryptography-3.4.6.tar.gz"
-    sha256 "2d32223e5b0ee02943f32b19245b61a62db83a882f0e76cc564e1cec60d48f87"
+    url "https://files.pythonhosted.org/packages/9b/77/461087a514d2e8ece1c975d8216bc03f7048e6090c5166bc34115afdaa53/cryptography-3.4.7.tar.gz"
+    sha256 "3d10de8116d25649631977cb37da6cbdd2d6fa0e0281d014a5b7d337255ca713"
   end
 
   resource "distro" do
@@ -63,8 +60,8 @@ class DockerCompose < Formula
   end
 
   resource "docker" do
-    url "https://files.pythonhosted.org/packages/fd/46/6f6116c30cb859a0cdb95444140e9fe0be0de455c9c83748ee421aec8274/docker-4.4.4.tar.gz"
-    sha256 "d3393c878f575d3a9ca3b94471a3c89a6d960b35feb92f033c0de36cc9d934db"
+    url "https://files.pythonhosted.org/packages/fa/a2/e46d7c1b51394a09271a3b07c3a68deb3a669429beafd444d9553ed52868/docker-5.0.0.tar.gz"
+    sha256 "3e8bc47534e0ca9331d72c32f2881bb13b93ded0bcdeab3c833fb7cf61c0a9a5"
   end
 
   resource "dockerpty" do
@@ -108,8 +105,8 @@ class DockerCompose < Formula
   end
 
   resource "python-dotenv" do
-    url "https://files.pythonhosted.org/packages/53/04/1a8126516c8febfeb2015844edee977c9b783bdff9b3bcd89b1cc2e1f372/python-dotenv-0.15.0.tar.gz"
-    sha256 "587825ed60b1711daea4832cf37524dfd404325b7db5e25ebe88c495c9f807a0"
+    url "https://files.pythonhosted.org/packages/66/94/286b7b88e24a7a2f3e020234524e3dc3dfdba313f299054b24b8d4d39b77/python-dotenv-0.17.1.tar.gz"
+    sha256 "b1ae5e9643d5ed987fc57cc2583021e38db531946518130777734f9589b3141f"
   end
 
   resource "PyYAML" do
@@ -123,8 +120,8 @@ class DockerCompose < Formula
   end
 
   resource "six" do
-    url "https://files.pythonhosted.org/packages/6b/34/415834bfdafca3c5f451532e8a8d9ba89a21c9743a0c59fbd0205c7f9426/six-1.15.0.tar.gz"
-    sha256 "30639c035cdb23534cd4aa2dd52c3bf48f06e5f4a941509c8bafd8ce11080259"
+    url "https://files.pythonhosted.org/packages/71/39/171f1c67cd00715f190ba0b100d606d440a28c93c7714febeca8b79af85e/six-1.16.0.tar.gz"
+    sha256 "1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"
   end
 
   resource "texttable" do
@@ -133,13 +130,13 @@ class DockerCompose < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/d7/8d/7ee68c6b48e1ec8d41198f694ecdc15f7596356f2ff8e6b1420300cf5db3/urllib3-1.26.3.tar.gz"
-    sha256 "de3eedaad74a2683334e282005cd8d7f22f4d55fa690a2a1020a416cb0a47e73"
+    url "https://files.pythonhosted.org/packages/cb/cf/871177f1fc795c6c10787bc0e1f27bb6cf7b81dbde399fd35860472cecbc/urllib3-1.26.4.tar.gz"
+    sha256 "e7b021f7241115872f92f43c6508082facffbd1c048e3c6e2bb9c2a157e28937"
   end
 
-  resource "websocket_client" do
-    url "https://files.pythonhosted.org/packages/8b/0f/52de51b9b450ed52694208ab952d5af6ebbcbce7f166a48784095d930d8c/websocket_client-0.57.0.tar.gz"
-    sha256 "d735b91d6d1692a6a181f2a8c9e0238e5f6373356f561bb9dc4c7af36f452010"
+  resource "websocket-client" do
+    url "https://files.pythonhosted.org/packages/48/bf/c706b56243f1641159ff211b51d3341024e1cdf63defc2b74595b6319039/websocket-client-0.59.0.tar.gz"
+    sha256 "d376bd60eace9d437ab6d7ee16f4ab4e821c9dae591e1b783c58ebd8aaf80c5c"
   end
 
   def install

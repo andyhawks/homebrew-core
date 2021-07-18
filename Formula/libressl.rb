@@ -2,9 +2,9 @@ class Libressl < Formula
   desc "Version of the SSL/TLS protocol forked from OpenSSL"
   homepage "https://www.libressl.org/"
   # Please ensure when updating version the release is from stable branch.
-  url "https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-3.2.4.tar.gz"
-  mirror "https://mirrorservice.org/pub/OpenBSD/LibreSSL/libressl-3.2.4.tar.gz"
-  sha256 "ac1dbb9e05a64910856599b1ac61118fdec1b3d0c700e42444d81c0d5f507a5a"
+  url "https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-3.3.3.tar.gz"
+  mirror "https://mirrorservice.org/pub/OpenBSD/LibreSSL/libressl-3.3.3.tar.gz"
+  sha256 "a471565b36ccd1a70d0bd7d37c6e95c43a26a62829b487d9d2cdebfe58be3066"
   license "OpenSSL"
 
   livecheck do
@@ -13,10 +13,11 @@ class Libressl < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "e7c3dbbcd08c32b308da932462aecc0b95304c42cf2c6a51d19575511a285608"
-    sha256 big_sur:       "d73d021753a498acafbdbff49a182797487e891628b5106ba6fcf4dcc0148e9f"
-    sha256 catalina:      "3a61191228fa1e5ff6e8dceff5bd29d05cc3ce7a260b4fb37c69fc938db7124f"
-    sha256 mojave:        "7fc2356a16b34b50313b1c0822b33cded2cdffd144b3738c8dd3b6d37318bd5f"
+    sha256 arm64_big_sur: "f4fa458d148637619331ff2ed9e58cd6af8aa2930d1c05f0deddc066c9decb66"
+    sha256 big_sur:       "580f06f61b53fcbcc66a55e1a176b581701fb7f83c22bd8d1429520dfd314a8c"
+    sha256 catalina:      "1665bf0da8764d6f3e2be97354db769c6f39fd7b2788429e58a81e6172e6185d"
+    sha256 mojave:        "b4eca6067e1ee105ab1798c35f7415a608a4c23baa316a91b6e855ce99885fe7"
+    sha256 x86_64_linux:  "a88a65bab85c2fd2fdd6ee9186412a895c1997295f4141e1f1e0db11787ae2d8"
   end
 
   head do
@@ -47,7 +48,10 @@ class Libressl < Formula
 
   def post_install
     on_macos do
+      ohai "Regenerating CA certificate bundle from keychain, this may take a while..."
+
       keychains = %w[
+        /Library/Keychains/System.keychain
         /System/Library/Keychains/SystemRootCertificates.keychain
       ]
 
@@ -56,8 +60,9 @@ class Libressl < Formula
         /-----BEGIN CERTIFICATE-----.*?-----END CERTIFICATE-----/m,
       )
 
+      # Check that the certificate has not expired
       valid_certs = certs.select do |cert|
-        IO.popen("#{bin}/openssl x509 -inform pem -checkend 0 -noout", "w") do |openssl_io|
+        IO.popen("#{bin}/openssl x509 -inform pem -checkend 0 -noout &>/dev/null", "w") do |openssl_io|
           openssl_io.write(cert)
           openssl_io.close_write
         end
@@ -65,9 +70,26 @@ class Libressl < Formula
         $CHILD_STATUS.success?
       end
 
+      # Check that the certificate is trusted in keychain
+      trusted_certs = begin
+        tmpfile = Tempfile.new
+
+        valid_certs.select do |cert|
+          tmpfile.rewind
+          tmpfile.write cert
+          tmpfile.truncate cert.size
+          tmpfile.flush
+          IO.popen("/usr/bin/security verify-cert -l -L -R offline -c #{tmpfile.path} &>/dev/null")
+
+          $CHILD_STATUS.success?
+        end
+      ensure
+        tmpfile&.close!
+      end
+
       # LibreSSL install a default pem - We prefer to use macOS for consistency.
       rm_f %W[#{etc}/libressl/cert.pem #{etc}/libressl/cert.pem.default]
-      (etc/"libressl/cert.pem").atomic_write(valid_certs.join("\n"))
+      (etc/"libressl/cert.pem").atomic_write(trusted_certs.join("\n") << "\n")
     end
   end
 

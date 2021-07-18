@@ -1,9 +1,9 @@
 class Tor < Formula
   desc "Anonymizing overlay network for TCP"
   homepage "https://www.torproject.org/"
-  url "https://www.torproject.org/dist/tor-0.4.5.6.tar.gz"
-  mirror "https://www.torservers.net/mirrors/torproject.org/dist/tor-0.4.5.6.tar.gz"
-  sha256 "22cba3794fedd5fa87afc1e512c6ce2c21bc20b4e1c6f8079d832dc1e545e733"
+  url "https://www.torproject.org/dist/tor-0.4.6.6.tar.gz"
+  mirror "https://www.torservers.net/mirrors/torproject.org/dist/tor-0.4.6.6.tar.gz"
+  sha256 "3423189ba455372021ed44e0be576d181f2908cbd9bdef202d9c11c950882e12"
   # Complete list of licenses:
   # https://gitweb.torproject.org/tor.git/plain/LICENSE
   license all_of: [
@@ -19,10 +19,11 @@ class Tor < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "9d31cc52eca5448f4c2730b455e4557d4ebc7b51abde31c512cb099968fc5b91"
-    sha256 big_sur:       "f2dbd959f56390f1cc4f2b0a083c2554d04118d0b8b1985e5dde690d821048f6"
-    sha256 catalina:      "d5568a357dfae463a2449abbf42ff58b195612b1a7fcb1ccdc54310d5e6b8f1b"
-    sha256 mojave:        "4987d925c60a67a1de6ee4da3e068c2be667abf2d640a268eb41e9aa11229c60"
+    sha256 arm64_big_sur: "baa13f389c38b96b7d44916a4dc80f3ba056e42a0e4e9ee184d99378776485a5"
+    sha256 big_sur:       "75c75afbf820906d213bce25a3f5412a2791ad522270a8c3d250f79cb66ec85f"
+    sha256 catalina:      "68fe9aaabac3594836d86c4402c717f1ba5ab08a48200e6ba2967403457181fb"
+    sha256 mojave:        "a4ffc4550f1c8991a54dcc31a45b84b8811f5fae9cc9a3c90aa2da362d46003f"
+    sha256 x86_64_linux:  "b5590a7db6406dfa3b9e7826793e623bd5a9f9f5fe80bdd43ff2744842d9b8c9"
   end
 
   depends_on "pkg-config" => :build
@@ -76,7 +77,12 @@ class Tor < Formula
   end
 
   test do
-    pipe_output("script -q /dev/null #{bin}/tor-gencert --create-identity-key", "passwd\npasswd\n")
+    on_macos do
+      pipe_output("script -q /dev/null #{bin}/tor-gencert --create-identity-key", "passwd\npasswd\n")
+    end
+    on_linux do
+      pipe_output("script -q /dev/null -e -c \"#{bin}/tor-gencert --create-identity-key\"", "passwd\npasswd\n")
+    end
     assert_predicate testpath/"authority_certificate", :exist?
     assert_predicate testpath/"authority_signing_key", :exist?
     assert_predicate testpath/"authority_identity_key", :exist?

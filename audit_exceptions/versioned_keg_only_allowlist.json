@@ -10,6 +10,7 @@
   "gcc@7",
   "gcc@8",
   "gcc@9",
+  "gcc@10",
   "glibmm@2.66",
   "gnupg@1.4",
   "libsigc++@2",
@@ -20,5 +21,7 @@
   "openssl@1.1",
   "pangomm@2.46",
   "pyqt@5",
-  "python@3.9"
+  "python@3.9",
+  "python-tk@3.9",
+  "wxmac@3.0"
 ]

@@ -2,16 +2,16 @@ class Volk < Formula
   include Language::Python::Virtualenv
 
   desc "Vector Optimized Library of Kernels"
-  homepage "https://libvolk.org"
+  homepage "https://www.libvolk.org/"
   url "https://github.com/gnuradio/volk.git",
-      tag:      "v2.4.1",
-      revision: "797b0ac846858d081fbb53ed50e98765ec9cb6b2"
+      tag:      "v2.5.0",
+      revision: "237a6fc9242ea8c48d2bbd417a6ea14feaf7314a"
   license "GPL-3.0-or-later"
 
   bottle do
-    sha256 big_sur:  "0324fc38e4ca9a378fa863af8543af8dbfd2eb83a4a22e008f5df434857b655a"
-    sha256 catalina: "96cdb958c8c97d9ddc96b3aee4aff3101952183c034f9a4d5b750a157756e693"
-    sha256 mojave:   "2cc90d04c112cf63c00b8f39c6e3ba297f963b3266ddd144b2924df7519e6e56"
+    sha256 big_sur:  "13397948c2762d27f80e47fa13ef95930aea8a1b9221ca266f34de6f052890e8"
+    sha256 catalina: "e1fce59ef2e0308beb2688319d62cce2086159f792838e97d82315fab965c24c"
+    sha256 mojave:   "7e2e2549521877c836c6b2c806f52c6256a9bc43c1d82b1f0edbbce0338bd512"
   end
 
   depends_on "cmake" => :build
@@ -21,8 +21,8 @@ class Volk < Formula
   depends_on "python@3.9"
 
   resource "Mako" do
-    url "https://files.pythonhosted.org/packages/72/89/402d2b4589e120ca76a6aed8fee906a0f5ae204b50e455edd36eda6e778d/Mako-1.1.3.tar.gz"
-    sha256 "8195c8c1400ceb53496064314c6736719c6f25e7479cd24c77be3d9361cddc27"
+    url "https://files.pythonhosted.org/packages/5c/db/2d2d88b924aa4674a080aae83b59ea19d593250bfe5ed789947c21736785/Mako-1.1.4.tar.gz"
+    sha256 "17831f0b7087c313c0ffae2bcbbd3c1d5ba9eeac9c38f2eb7b50e8c99fe9d5ab"
   end
 
   def install

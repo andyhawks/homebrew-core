@@ -3,15 +3,16 @@ class Ykdl < Formula
 
   desc "Video downloader that focus on China mainland video sites"
   homepage "https://github.com/zhangn1985/ykdl"
-  url "https://github.com/zhangn1985/ykdl/archive/v1.7.0.tar.gz"
-  sha256 "44e9d946c0e311a5469319a200af5bc5a6e461efa0f117f6a9608f820f22ecb8"
+  url "https://github.com/zhangn1985/ykdl/archive/v1.7.1.tar.gz"
+  sha256 "15b4b977b9fca6f9b646d360206987618dc851a78cc49b29fda60b49f9a4d8a1"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "b5b6fcdfe59c2296f42ae8f2f0a634bba9d952a3d7af4b411a2fc8a238cc112c"
-    sha256 cellar: :any_skip_relocation, big_sur:       "39f6e7ed8a11ec0a6eab3cb3e3236d261aa2490fc9e5697c75ecfc37ae33bead"
-    sha256 cellar: :any_skip_relocation, catalina:      "797ce1b9f6002a6153019355f957013c078fbe3a36a709293b32a717ff78c30d"
-    sha256 cellar: :any_skip_relocation, mojave:        "163c3593145fc6f85b00be215f20c5393219147af348c4c90dc34c942e5966f4"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "39b90419e77cc1a805a498fd4c7700a58a26391e3b67cffb9798723e33f214bb"
+    sha256 cellar: :any_skip_relocation, big_sur:       "2b393c18e696763fc50d9bf4c898cc0f02930d02ca775a85226154d5f0ff5bec"
+    sha256 cellar: :any_skip_relocation, catalina:      "2b393c18e696763fc50d9bf4c898cc0f02930d02ca775a85226154d5f0ff5bec"
+    sha256 cellar: :any_skip_relocation, mojave:        "2b393c18e696763fc50d9bf4c898cc0f02930d02ca775a85226154d5f0ff5bec"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3739908b2833fcc002316a30054eb511ab311037e012619207fef70dc2c41ce1"
   end
 
   depends_on "python@3.9"

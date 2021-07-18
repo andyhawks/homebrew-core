@@ -1,15 +1,15 @@
 class Fq < Formula
   desc "Brokered message queue optimized for performance"
   homepage "https://github.com/circonus-labs/fq"
-  url "https://github.com/circonus-labs/fq/archive/v0.13.8.tar.gz"
-  sha256 "efd6b7007e317ff562bf0c7abf1817db48153d9b8a1495fa4f025dec8c4c7de7"
+  url "https://github.com/circonus-labs/fq/archive/v0.13.10.tar.gz"
+  sha256 "fe304987145ec7ce0103a3d06a75ead38ad68044c0f609ad0bcc20c06cbfd62e"
   license "MIT"
   head "https://github.com/circonus-labs/fq.git"
 
   bottle do
-    sha256 big_sur:  "7ebbd20f8d7fde7ae781e2ab430d3721d62e4536db6155b50dfb2467e849be66"
-    sha256 catalina: "de8abe5779afcea66bb6365ee1f7a0a00dcec6ffcbfe12ab639442ca1421f875"
-    sha256 mojave:   "5b5f533adb69d9750ba18722054685d01bcbd1e1860c9f3bb5daddad550384b8"
+    sha256 big_sur:  "cc5d1afac284b9e5f0c94e46f02d66dae8bc5a6a49dda7b2c95c82b62c82bb9e"
+    sha256 catalina: "67a46b7b2067466a653e64327ed90d2b0d5624b025df8919e1376710471ba7a7"
+    sha256 mojave:   "195ecf7b14066822a6645469e43cf5550f825e6989531dffa43d66d029228743"
   end
 
   depends_on "concurrencykit"

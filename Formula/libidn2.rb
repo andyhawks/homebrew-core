@@ -1,9 +1,9 @@
 class Libidn2 < Formula
   desc "International domain name library (IDNA2008, Punycode and TR46)"
   homepage "https://www.gnu.org/software/libidn/#libidn2"
-  url "https://ftp.gnu.org/gnu/libidn/libidn2-2.3.0.tar.gz"
-  mirror "https://ftpmirror.gnu.org/libidn/libidn2-2.3.0.tar.gz"
-  sha256 "e1cb1db3d2e249a6a3eb6f0946777c2e892d5c5dc7bd91c74394fc3a01cab8b5"
+  url "https://ftp.gnu.org/gnu/libidn/libidn2-2.3.1.tar.gz"
+  mirror "https://ftpmirror.gnu.org/libidn/libidn2-2.3.1.tar.gz"
+  sha256 "8af684943836b8b53965d5f5b6714ef13c26c91eaa36ce7d242e3d21f5d40f2d"
   license any_of: ["GPL-2.0-or-later", "LGPL-3.0-or-later"]
 
   livecheck do
@@ -12,11 +12,12 @@ class Libidn2 < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "eb8e6de157329d032c3d3343b15b75896c4bb3aa8bec3fd11055757ddb467827"
-    sha256 big_sur:       "65523d89d65893a402f9f2641793314d5c18f5ba115400ef6ad372b8c177ebd9"
-    sha256 catalina:      "0908585cca518a83f101b2edc0417a26a4b4fc8b76e393c6f6672de6e595c914"
-    sha256 mojave:        "d56e7ff347b0a4c2c433cd44564dfef74c9f1b237ef913307e152314677e1360"
-    sha256 high_sierra:   "4530dd74cbd31c49b0f499eda0f9ea29ec7ff6ae00f9aff3974247365d1fb21e"
+    rebuild 1
+    sha256 arm64_big_sur: "01ffa4ee0e56a4190329e352543a2c11eb13801f0ec19577e37ef89440679504"
+    sha256 big_sur:       "25c6ccfc501690f453ebcb4ce56609bcfa3ba915da6dd29ecbf9afe0e3ef321b"
+    sha256 catalina:      "0ca13baf4da29a9a0fd0f4bab818318f0c555d1dfab586ed3addfc5a716f3440"
+    sha256 mojave:        "b2707eb113d2a31e0e1ca8385777939948f71a78d2312085f15b2df8c79581af"
+    sha256 x86_64_linux:  "a907fb49867f904848a3df8ea38dc57f7196c43914de74c46a2de69ba65607a1"
   end
 
   head do
@@ -26,6 +27,7 @@ class Libidn2 < Formula
     depends_on "automake" => :build
     depends_on "gengetopt" => :build
     depends_on "libtool" => :build
+    depends_on "ronn" => :build
   end
 
   depends_on "pkg-config" => :build
@@ -33,12 +35,7 @@ class Libidn2 < Formula
   depends_on "libunistring"
 
   def install
-    if build.head?
-      ENV["GEM_HOME"] = buildpath/"gem_home"
-      system "gem", "install", "ronn"
-      ENV.prepend_path "PATH", buildpath/"gem_home/bin"
-      system "./bootstrap"
-    end
+    system "./bootstrap" if build.head?
 
     system "./configure", "--disable-dependency-tracking",
                           "--disable-silent-rules",

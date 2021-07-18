@@ -1,8 +1,8 @@
 class Composer < Formula
   desc "Dependency Manager for PHP"
   homepage "https://getcomposer.org/"
-  url "https://getcomposer.org/download/2.0.11/composer.phar"
-  sha256 "d6eee0d4637f4bd82bdae098fceda300dcb3ec35bf502604fbe7510933b8f952"
+  url "https://getcomposer.org/download/2.1.3/composer.phar"
+  sha256 "f8a72e98dec8da736d8dac66761ca0a8fbde913753e9a43f34112367f5174d11"
   license "MIT"
 
   livecheck do
@@ -10,7 +10,12 @@ class Composer < Formula
     regex(%r{href=.*?/v?(\d+(?:\.\d+)+)/composer\.phar}i)
   end
 
-  bottle :unneeded
+  bottle do
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "7ce70237cec9f4a40aa1ea6917d40258c010bf59b47026f32d0b31ede8c49188"
+    sha256 cellar: :any_skip_relocation, big_sur:       "4c852f706d4ead18bb1cf79a972783b169fa52ce24c348a1d5dd349db5b6f404"
+    sha256 cellar: :any_skip_relocation, catalina:      "4c852f706d4ead18bb1cf79a972783b169fa52ce24c348a1d5dd349db5b6f404"
+    sha256 cellar: :any_skip_relocation, mojave:        "4c852f706d4ead18bb1cf79a972783b169fa52ce24c348a1d5dd349db5b6f404"
+  end
 
   def install
     bin.install "composer.phar" => "composer"

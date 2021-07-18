@@ -1,16 +1,17 @@
 class Nettle < Formula
   desc "Low-level cryptographic library"
   homepage "https://www.lysator.liu.se/~nisse/nettle/"
-  url "https://ftp.gnu.org/gnu/nettle/nettle-3.7.1.tar.gz"
-  mirror "https://ftpmirror.gnu.org/nettle/nettle-3.7.1.tar.gz"
-  sha256 "156621427c7b00a75ff9b34b770b95d34f80ef7a55c3407de94b16cbf436c42e"
+  url "https://ftp.gnu.org/gnu/nettle/nettle-3.7.3.tar.gz"
+  mirror "https://ftpmirror.gnu.org/nettle/nettle-3.7.3.tar.gz"
+  sha256 "661f5eb03f048a3b924c3a8ad2515d4068e40f67e774e8a26827658007e3bcf0"
   license any_of: ["GPL-2.0-or-later", "LGPL-3.0-or-later"]
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "3efe8eae1e8f9c3d2e05ae28eb1b1b2cb6d31fe1ed0116979e5df6fda01a60b0"
-    sha256 cellar: :any, big_sur:       "902f1d7ccbb934172e0274d46ac98b38a528bfc3d810da05e6eb5f1d5a13a0b1"
-    sha256 cellar: :any, catalina:      "9504cb3a8dc7a70dc118635d5af2b79bd1dbda75db8ecc17ef6988b50933d633"
-    sha256 cellar: :any, mojave:        "a7fb32b7bbc8b6c010f850ac9f2a7016a32ed7f645b2d4887e30a8cd7b2b2fe4"
+    sha256 cellar: :any,                 arm64_big_sur: "3cd41002e6358b07ca506ed09fb07473d61c1c2717b630f8d708c74ab5d06704"
+    sha256 cellar: :any,                 big_sur:       "80fa0a047c3d08ccb47c8820a566d187365e8ea75e0cdf903ef0653d3aa3bb67"
+    sha256 cellar: :any,                 catalina:      "f1f1c41bf3dadabc748a34bba26b8771e4e36ae0815be4a83d1d317d90fa3c2e"
+    sha256 cellar: :any,                 mojave:        "f7900666b8d57164a5e770008390ea3fe2c519941e3f28daba9ef91dad4e5e69"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a7c56819e2bc18baf900853311685108aab2cda8fc4963ca095ba893235ef1cb"
   end
 
   depends_on "gmp"

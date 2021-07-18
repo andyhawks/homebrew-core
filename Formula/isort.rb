@@ -3,8 +3,8 @@ class Isort < Formula
 
   desc "Sort Python imports automatically"
   homepage "https://pycqa.github.io/isort/"
-  url "https://files.pythonhosted.org/packages/a2/f7/f50fc9555dc0fe2dc1e7f69d93f71961d052857c296cad0fb6d275b20008/isort-5.7.0.tar.gz"
-  sha256 "c729845434366216d320e936b8ad6f9d681aab72dc7cbc2d51bedc3582f3ad1e"
+  url "https://files.pythonhosted.org/packages/ac/2a/87e6a7d3c3953ddfb37c6da3fd951490425a60d2ab0be059b321d5788dc8/isort-5.9.2.tar.gz"
+  sha256 "f65ce5bd4cbc6abdfbe29afc2f0245538ab358c14590912df638033f157d555e"
   license "MIT"
 
   livecheck do
@@ -13,10 +13,11 @@ class Isort < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "e9eff09e8303490635ecd70945590d7449b15f4978c1651711991dece289b4d3"
-    sha256 cellar: :any_skip_relocation, big_sur:       "454f81b392904f6c3b051968349f2547be7cf142f63a34bf2771d65768c051dc"
-    sha256 cellar: :any_skip_relocation, catalina:      "0795695d5fd3d18e2b46a119acf132a66be387ad7515d5eb6f0686db4da28526"
-    sha256 cellar: :any_skip_relocation, mojave:        "4e2beae6fc40007208704b756f4abc60c11ef04ce7e164f128bb3f22d884cf97"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "782fbf745d76bc86201818718026f50e24c16e4b7e48e39e0087539195b49319"
+    sha256 cellar: :any_skip_relocation, big_sur:       "f9d947b55140ca255b947f96e77bb796619f4fc3e974e57f4defde87764e677a"
+    sha256 cellar: :any_skip_relocation, catalina:      "7ca3e49c222871b0bb91520b180abf4ebf953b4f3aac7eab36cb67e710cbc24e"
+    sha256 cellar: :any_skip_relocation, mojave:        "f9527c060b4d71740227719b26a43637d309d6c59c0567253aeca048508ba923"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2f923b3f1c41608e28549de5c00406419434841f981f96a7e2a2e08c2de4ae13"
   end
 
   depends_on "python@3.9"

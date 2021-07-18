@@ -5,10 +5,10 @@ class Vault < Formula
   desc "Secures, stores, and tightly controls access to secrets"
   homepage "https://vaultproject.io/"
   url "https://github.com/hashicorp/vault.git",
-      tag:      "v1.6.3",
-      revision: "b540be4b7ec48d0dd7512c8d8df9399d6bf84d76"
+      tag:      "v1.7.3",
+      revision: "5d517c864c8f10385bf65627891bc7ef55f5e827"
   license "MPL-2.0"
-  head "https://github.com/hashicorp/vault.git"
+  head "https://github.com/hashicorp/vault.git", branch: "main"
 
   livecheck do
     url "https://releases.hashicorp.com/vault/"
@@ -16,14 +16,17 @@ class Vault < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, big_sur:  "79533af24d10955d68163da97bea338253b800c90eb939827cf424558a14cc86"
-    sha256 cellar: :any_skip_relocation, catalina: "0794305b753438b9631801e9cf4c850ae9cd46170a8ce8e500ce214b2eb11186"
-    sha256 cellar: :any_skip_relocation, mojave:   "143f8720a199827a818954eadc95bbbf6a216333fcc3bb2d1eca8cb278a0710a"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "f9e9ff9c469553fade899be62cb729a09d0366fa01cc4c35156ee9615a9fb0eb"
+    sha256 cellar: :any_skip_relocation, big_sur:       "8690b134a8a1fd3c6fffe89aa1711b17c02e5ba187fed06027f5dd2b7e7001c1"
+    sha256 cellar: :any_skip_relocation, catalina:      "67278a2537cc7a10ad685ae1ed76a62309b4ceeb58b4447c31af4de041b1ccfe"
+    sha256 cellar: :any_skip_relocation, mojave:        "40d18916c9c50ef3aeb9e57dc31ff4cbf46a57c811de6260d125f1b6718cd734"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bc2760aff47c4fd741eef2433330fb5b019cf36bbdf0dcfd74e3525d9713fc96"
   end
 
   depends_on "go" => :build
   depends_on "gox" => :build
-  depends_on "node@10" => :build
+  # Cannot build with `node` while upstream depends on node-sass<6
+  depends_on "node@14" => :build
   depends_on "yarn" => :build
 
   def install

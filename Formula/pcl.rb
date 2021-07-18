@@ -1,18 +1,29 @@
 class Pcl < Formula
   desc "Library for 2D/3D image and point cloud processing"
   homepage "https://pointclouds.org/"
-  url "https://github.com/PointCloudLibrary/pcl/archive/pcl-1.11.1.tar.gz"
-  sha256 "a61558e53abafbc909e0996f91cfd2d7a400fcadf6b8cfb0ea3172b78422c74e"
   license "BSD-3-Clause"
-  revision 6
-  head "https://github.com/PointCloudLibrary/pcl.git"
+  revision 8
+
+  stable do
+    url "https://github.com/PointCloudLibrary/pcl/archive/pcl-1.11.1.tar.gz"
+    sha256 "a61558e53abafbc909e0996f91cfd2d7a400fcadf6b8cfb0ea3172b78422c74e"
+
+    # VTK 9 will be supported in PCL 1.12.
+    depends_on "vtk@8.2"
+  end
 
   bottle do
-    rebuild 2
-    sha256 arm64_big_sur: "1c063e5e8337be6c1f6f5ae157d667c35975f71f6fae04a442b8e744d3107d32"
-    sha256 big_sur:       "28d8084197443d83e2c645397f1ac02424a23a796d43c83818fc776504c5ff7e"
-    sha256 catalina:      "6fd5dffa364e69965ddc84b2567a9b5652c88f2fb9014f6a3bbc1d8fb612f089"
-    sha256 mojave:        "53a69083aa676db47ad798d9d519f6c7db2fd85e6eed02c463add06a7c0485ea"
+    rebuild 1
+    sha256 cellar: :any, arm64_big_sur: "6ba5d120dd629c8fe294cfcfd75817024935e4901807732ec3ecb4404430ca63"
+    sha256 cellar: :any, big_sur:       "e26ac7c25e8d1cd5581b0c25a4a5abcfdc49938784696f988c606cd4248294a8"
+    sha256 cellar: :any, catalina:      "4c25e37d19f4f7e300be112a6ef5dcfeaa9523b1e4aa0457a4873e478663dc54"
+    sha256 cellar: :any, mojave:        "ee7e82622e783b380752ed27eeb65f6a33bc843c30a633c73bde7db2a5f3a304"
+  end
+
+  head do
+    url "https://github.com/PointCloudLibrary/pcl.git"
+
+    depends_on "vtk"
   end
 
   depends_on "cmake" => [:build, :test]
@@ -26,7 +37,7 @@ class Pcl < Formula
   depends_on "libpcap"
   depends_on "libusb"
   depends_on "qhull"
-  depends_on "vtk@8.2"
+  depends_on "qt@5"
 
   def install
     args = std_cmake_args + %w[
@@ -43,7 +54,6 @@ class Pcl < Formula
       -DBUILD_simulation:BOOL=ON
       -DWITH_CUDA:BOOL=OFF
       -DWITH_DOCS:BOOL=OFF
-      -DWITH_QT:BOOL=FALSE
       -DWITH_TUTORIALS:BOOL=OFF
     ]
 
@@ -104,7 +114,7 @@ class Pcl < Formula
       # (Homebrew/homebrew-test-bot#544) when bumping the boost
       # revision without bumping this formula's revision as well
       ENV.prepend_path "PKG_CONFIG_PATH", Formula["eigen"].opt_share/"pkgconfig"
-      system "cmake", "..", *std_cmake_args
+      system "cmake", "..", "-DGLEW_DIR=#{Formula["glew"].opt_lib}/cmake/glew", *std_cmake_args
       system "make"
       system "./pcd_write"
       assert_predicate (testpath/"build/test_pcd.pcd"), :exist?

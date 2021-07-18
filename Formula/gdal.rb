@@ -1,9 +1,10 @@
 class Gdal < Formula
   desc "Geospatial Data Abstraction Library"
   homepage "https://www.gdal.org/"
-  url "https://download.osgeo.org/gdal/3.2.2/gdal-3.2.2.tar.xz"
-  sha256 "a7e1e414e5c405af48982bf4724a3da64a05770254f2ce8affb5f58a7604ca57"
+  url "https://download.osgeo.org/gdal/3.3.1/gdal-3.3.1.tar.xz"
+  sha256 "48ab00b77d49f08cf66c60ccce55abb6455c3079f545e60c90ee7ce857bccb70"
   license "MIT"
+  revision 1
 
   livecheck do
     url "https://download.osgeo.org/gdal/CURRENT/"
@@ -11,10 +12,10 @@ class Gdal < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "f07f82af9cec80db1abf9ad266307dfe7133e5e7e205107f2b3d8668f3c169fb"
-    sha256 big_sur:       "bd3f79d0ca3ca2c35bb086635809ec0c2a5940893b905a8350a644c0fcf16619"
-    sha256 catalina:      "e933d11e8e13b79b7547b2ca21231e4ab116b86193c389e426d1d788e8553514"
-    sha256 mojave:        "f8324215b5735e886a2083fd9ce1df77205a2f9eb79537384be06b995b679e26"
+    sha256 arm64_big_sur: "4b2f6161d15671b511aab4892c00aeb98c1508de4166ecda236ecd85e782c83e"
+    sha256 big_sur:       "7e5ba2dfcf0a525034bcddb77e2fe8706d7cc4c19a966c1dae20537bb8c93ecc"
+    sha256 catalina:      "24a207ad19ffacb02faebbfb3b3dee94099d576873f7b4340fab1c617a970132"
+    sha256 mojave:        "f75e12fe0ae2dd60cc9fdd2a14aa5301ceccf53f5c5efec042673514e7ef863a"
   end
 
   head do
@@ -23,7 +24,6 @@ class Gdal < Formula
   end
 
   depends_on "pkg-config" => :build
-
   depends_on "cfitsio"
   depends_on "epsilon"
   depends_on "expat"
@@ -44,8 +44,8 @@ class Gdal < Formula
   depends_on "numpy"
   depends_on "openjpeg"
   depends_on "pcre"
-  depends_on "poppler"
-  depends_on "proj"
+  depends_on "poppler-qt5"
+  depends_on "proj@7"
   depends_on "python@3.9"
   depends_on "sqlite" # To ensure compatibility with SpatiaLite
   depends_on "unixodbc" # macOS version is not complete enough
@@ -60,6 +60,7 @@ class Gdal < Formula
     depends_on "bash-completion"
   end
 
+  conflicts_with "avce00", because: "both install a cpl_conv.h header"
   conflicts_with "cpl", because: "both install cpl_error.h"
 
   def install
@@ -91,7 +92,7 @@ class Gdal < Formula
       "--with-png=#{Formula["libpng"].opt_prefix}",
       "--with-spatialite=#{Formula["libspatialite"].opt_prefix}",
       "--with-sqlite3=#{Formula["sqlite"].opt_prefix}",
-      "--with-proj=#{Formula["proj"].opt_prefix}",
+      "--with-proj=#{Formula["proj@7"].opt_prefix}",
       "--with-zstd=#{Formula["zstd"].opt_prefix}",
       "--with-liblzma=yes",
       "--with-cfitsio=#{Formula["cfitsio"].opt_prefix}",

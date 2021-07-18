@@ -5,13 +5,20 @@ class Ilmbase < Formula
   url "https://github.com/openexr/openexr/archive/v2.5.5.tar.gz"
   sha256 "59e98361cb31456a9634378d0f653a2b9554b8900f233450f2396ff495ea76b3"
   license "BSD-3-Clause"
+  revision 1
 
   bottle do
-    sha256 arm64_big_sur: "f465c8e3f824777ab727d17e11c018eff8d8afc12ffe0bb014dbce22522e9b7d"
-    sha256 big_sur:       "c29c6544af5a4b57b14984322b16ab1d7e5e6598f6a999bed1cd757b78d8324c"
-    sha256 catalina:      "9f185fa9c393f463d37002736f4ef0dfdbe347a60193d38371d1b1055fc22a0d"
-    sha256 mojave:        "53b8f2f3e3e1ef9b6c22de5993eec29ab6d9cc46109df39a7eb7b49f0b8e02a2"
+    sha256                               arm64_big_sur: "5a95c1ea57a08dde47723507b0406a408664e4170026a5a5771681f42ac3c6df"
+    sha256                               big_sur:       "846c944f66f265e002af5f3ba3f2a989fbbc8a175e394d5e597d56b50b480f74"
+    sha256                               catalina:      "bdb6dad0ee508d3bd86f50ced1eb15c0d0d25a1ffe1133659493f9cfccc41b52"
+    sha256                               mojave:        "7ab7edd363f935a6411b038adea08d1aaf0e8eba1168cdd58fda21182346fc4a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6cf2850352b13d0c640e213faaf6b26ff6f6f1c59a51e5210ca7ad0948c43364"
   end
+
+  keg_only "ilmbase conflicts with `openexr` and `imath`"
+
+  # https://github.com/AcademySoftwareFoundation/openexr/pull/929
+  deprecate! date: "2021-04-05", because: :unsupported
 
   depends_on "cmake" => :build
 
@@ -20,6 +27,13 @@ class Ilmbase < Formula
       system "cmake", ".", *std_cmake_args, "-DBUILD_TESTING=OFF"
       system "make", "install"
     end
+  end
+
+  def caveats
+    <<~EOS
+      `ilmbase` has been replaced by `imath`. You may want to `brew uninstall ilmbase`
+      or `brew unlink ilmbase` to prevent conflicts.
+    EOS
   end
 
   test do

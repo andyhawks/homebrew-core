@@ -5,12 +5,14 @@ class Gitbucket < Formula
   sha256 "19cf2233f76171beda543fa11812365f409f807c07210ab83d57cb8252d66ebe"
   license "Apache-2.0"
 
+  bottle do
+    sha256 cellar: :any_skip_relocation, all: "d993565ae3717b98cb81878650164ba91c8af24d2238d78d1999640b49c54b3a"
+  end
+
   head do
     url "https://github.com/gitbucket/gitbucket.git"
     depends_on "ant" => :build
   end
-
-  bottle :unneeded
 
   depends_on "openjdk"
 
@@ -25,40 +27,20 @@ class Gitbucket < Formula
 
   def caveats
     <<~EOS
-      Note: When using launchctl the port will be 8080.
+      Note: When using `brew services` the port will be 8080.
     EOS
   end
 
-  plist_options manual: "java -jar #{HOMEBREW_PREFIX}/opt/gitbucket/libexec/gitbucket.war"
-
-  def plist
-    <<~EOS
-      <?xml version="1.0" encoding="UTF-8"?>
-      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-      <plist version="1.0">
-        <dict>
-          <key>Label</key>
-          <string>gitbucket</string>
-          <key>ProgramArguments</key>
-          <array>
-            <string>#{Formula["openjdk"].opt_bin}/java</string>
-            <string>-Dmail.smtp.starttls.enable=true</string>
-            <string>-jar</string>
-            <string>#{opt_libexec}/gitbucket.war</string>
-            <string>--host=127.0.0.1</string>
-            <string>--port=8080</string>
-          </array>
-          <key>RunAtLoad</key>
-         <true/>
-        </dict>
-      </plist>
-    EOS
+  service do
+    run [Formula["openjdk"].opt_bin/"java", "-Dmail.smtp.starttls.enable=true", "-jar", opt_libexec/"gitbucket.war",
+         "--host=127.0.0.1", "--port=8080"]
   end
 
   test do
     java = Formula["openjdk"].opt_bin/"java"
     fork do
-      exec "'#{java}' -jar #{libexec}/gitbucket.war --port=#{free_port} > output"
+      $stdout.reopen(testpath/"output")
+      exec "#{java} -jar #{libexec}/gitbucket.war --port=#{free_port}"
     end
     sleep 12
     File.read("output") !~ /Exception/

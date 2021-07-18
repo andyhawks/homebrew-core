@@ -2,16 +2,13 @@ class GitGui < Formula
   desc "Tcl/Tk UI for the git revision control system"
   homepage "https://git-scm.com"
   # NOTE: Please keep these values in sync with git.rb when updating.
-  url "https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.30.2.tar.xz"
-  sha256 "41f7d90c71f9476cd387673fcb10ce09ccbed67332436a4cc58d7af32c355faa"
+  url "https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.32.0.tar.xz"
+  sha256 "68a841da3c4389847ecd3301c25eb7e4a51d07edf5f0168615ad6179e3a83623"
   license "GPL-2.0-only"
-  head "https://github.com/git/git.git", shallow: false
+  head "https://github.com/git/git.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "7866be93d8bc333f4fdba78ddda67a79a653b9021904f57a0ffc2eca408374d0"
-    sha256 cellar: :any_skip_relocation, big_sur:       "d299a40adc41a52ae30fccb8a4a73eebb9efa4b7f33c035e0b7f081ceb6bfac2"
-    sha256 cellar: :any_skip_relocation, catalina:      "32b306f6559b8d3bfd2a1a2d7379acaf159c78a05cedc5b05c656595be21da2c"
-    sha256 cellar: :any_skip_relocation, mojave:        "c0cf97bb3086ff6c7bfe925fbc15a660df9cd5ddc8c9800fce9302f6a0a5fba0"
+    sha256 cellar: :any_skip_relocation, all: "4c74f3625ae0a40d8fe38346045b635aa0489e7a92239c7fed3b33c16867c613"
   end
 
   depends_on "tcl-tk"

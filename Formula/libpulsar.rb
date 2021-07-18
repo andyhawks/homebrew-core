@@ -1,17 +1,16 @@
 class Libpulsar < Formula
   desc "Apache Pulsar C++ library"
   homepage "https://pulsar.apache.org/"
-  url "https://www.apache.org/dyn/closer.lua?path=pulsar/pulsar-2.7.0/apache-pulsar-2.7.0-src.tar.gz"
-  mirror "https://archive.apache.org/dist/pulsar/pulsar-2.7.0/apache-pulsar-2.7.0-src.tar.gz"
-  sha256 "f1e8168b7f2b8bfc06c84f743eb4f3dfa5f8f376f087c5ef1532f998cf56bab4"
+  url "https://www.apache.org/dyn/closer.lua?path=pulsar/pulsar-2.8.0/apache-pulsar-2.8.0-src.tar.gz"
+  mirror "https://archive.apache.org/dist/pulsar/pulsar-2.8.0/apache-pulsar-2.8.0-src.tar.gz"
+  sha256 "0e161a81c62c7234c1e0c243bb6fe30046ec1cd01472618573ecdc2a73b1163b"
   license "Apache-2.0"
-  revision 2
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "e3253f91a1a4d106ed31258efa556536748f83fbed2444e5b848b01a78a9bd8c"
-    sha256 cellar: :any, big_sur:       "81f0d54d4de03504764c7b1bbd02a5f7abaa5ae20c06c327473916c14860d298"
-    sha256 cellar: :any, catalina:      "016a97206deb91a8aeac60d3eb9ecae8c81f3deab10d4c17e37f8ab34a80c3eb"
-    sha256 cellar: :any, mojave:        "a8a3a7e1f633cfbf2e2c986eec043bf3ee84a021bb70a274268b40e457ab1955"
+    sha256 cellar: :any, arm64_big_sur: "c6ff21f91a74df5c179821426340067bebe045663d8626a1ad4a1c9cb21cb912"
+    sha256 cellar: :any, big_sur:       "bc0154f9f3f130b793a9ddbf2ede2c8084b658e8ea3948d15dd90c1068339e60"
+    sha256 cellar: :any, catalina:      "bc49897ed00c8229f49cc89ad6a24ea49b0e8e5017e4de129165b66ea3d62da0"
+    sha256 cellar: :any, mojave:        "7248e726666cd83133242b715b9e71208337a22c9c56e7ce9fe71fec03b596fc"
   end
 
   depends_on "cmake" => :build
@@ -21,6 +20,8 @@ class Libpulsar < Formula
   depends_on "protobuf"
   depends_on "snappy"
   depends_on "zstd"
+
+  uses_from_macos "curl"
 
   def install
     cd "pulsar-client-cpp" do
@@ -44,7 +45,8 @@ class Libpulsar < Formula
         return 0;
       }
     EOS
-    system ENV.cxx, "test.cc", "-L#{lib}", "-lpulsar", "-o", "test"
+
+    system ENV.cxx, "-std=gnu++11", "test.cc", "-L#{lib}", "-lpulsar", "-o", "test"
     system "./test"
   end
 end

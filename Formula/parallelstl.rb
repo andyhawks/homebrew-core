@@ -4,18 +4,15 @@ class Parallelstl < Formula
   url "https://github.com/intel/parallelstl/archive/20201111.tar.gz"
   sha256 "c5ca7e0a618df8d28087be2e23ae38713ab1bcff0107562b935fbb5ba072fbf6"
   # Apache License Version 2.0 with LLVM exceptions
-  license "Apache-2.0"
+  license "Apache-2.0" => { with: "LLVM-exception" }
+  revision 1
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "944b95b0b94389d981d71def6dd11e676c911c578b680b08c5a176937877a5ac"
-    sha256 cellar: :any_skip_relocation, big_sur:       "a5f7b936a95bd0c34f5dac2deb1d642fdaaaca6a5fef2fa72879a82ceb4e3f84"
-    sha256 cellar: :any_skip_relocation, catalina:      "90737db9c682cbb31c250745bf089fd4f3d72fca3980dad138472c1d6ef8a5ae"
-    sha256 cellar: :any_skip_relocation, mojave:        "c0eb967346b81fa899a348dcc51c5cec898add7384134006bf2335f349b9be4a"
-    sha256 cellar: :any_skip_relocation, high_sierra:   "4e0f682ecd6e591ab1a6d71e4579409485a1a63bbcc1b6d22738eda43e1fd762"
+    sha256 cellar: :any_skip_relocation, all: "3467deb5b4e2b46b8ecdaa4930c6e01ae4f432b01648e04912ff2bd8d9737e4b"
   end
 
   depends_on "cmake" => :build
-  depends_on "tbb"
+  depends_on "tbb@2020"
 
   def install
     mkdir "build" do
@@ -26,6 +23,8 @@ class Parallelstl < Formula
   end
 
   test do
+    tbb = Formula["tbb@2020"]
+
     (testpath/"test.cpp").write <<~EOS
       #include <pstl/execution>
       #include <pstl/algorithm>
@@ -40,7 +39,7 @@ class Parallelstl < Formula
         return 0;
       }
     EOS
-    system ENV.cxx, "-std=c++11", "-L#{Formula["tbb"].opt_lib}", "-ltbb",
+    system ENV.cxx, "-std=c++11", "-L#{tbb.opt_lib}", "-ltbb", "-I#{tbb.opt_include}",
                     "-I#{prefix}/stdlib", "-I#{include}", "test.cpp", "-o", "test"
     system "./test"
   end

@@ -1,8 +1,8 @@
 class Curl < Formula
   desc "Get a file from an HTTP, HTTPS or FTP server"
   homepage "https://curl.se"
-  url "https://curl.se/download/curl-7.75.0.tar.bz2"
-  sha256 "50552d4501c178e4cc68baaecc487f466a3d6d19bbf4e50a01869effb316d026"
+  url "https://curl.se/download/curl-7.77.0.tar.bz2"
+  sha256 "6c0c28868cb82593859fc43b9c8fdb769314c855c05cf1b56b023acf855df8ea"
   license "curl"
 
   livecheck do
@@ -11,10 +11,12 @@ class Curl < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "feef288ebc2fb55c4c0803e233c600b5ded8e92863f0ad3a058c9c007933940b"
-    sha256 cellar: :any, big_sur:       "04b809e93240c4b79bad7d224756492a574e6f97e78d2b394cb7418b633d5c7d"
-    sha256 cellar: :any, catalina:      "f06f0f2a005d444c23cdaec96f047a204cb024ee881213682ab3374f1d1f4dbd"
-    sha256 cellar: :any, mojave:        "ebcf2c049613a0655429872b1bd109b1dd00ba1721e6356cf2aec8b95ba37e47"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_big_sur: "36940ec937de41aefd30d264885e909ac4621f89af69e708ff28e0e6e80b18d4"
+    sha256 cellar: :any,                 big_sur:       "2fea808dd9f8dc2a9bac45870be0a14f2f81243652d2e46d319e36e865543367"
+    sha256 cellar: :any,                 catalina:      "4a549f63ab3fa72db7efa9d2a9a9f886fa093546b93b548346216feb878f5268"
+    sha256 cellar: :any,                 mojave:        "9313777bd2c21e174542c9dd66ee80eb6f4d8f63dae96b5ba4202b957f404b8a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "830bbfdf79183e1b7eef6009c0d1aef0f048859839ec8c19367745bdc2a2ba52"
   end
 
   head do
@@ -30,7 +32,6 @@ class Curl < Formula
   depends_on "pkg-config" => :build
   depends_on "brotli"
   depends_on "libidn2"
-  depends_on "libmetalink"
   depends_on "libssh2"
   depends_on "nghttp2"
   depends_on "openldap"
@@ -57,7 +58,6 @@ class Curl < Formula
       --with-default-ssl-backend=openssl
       --with-gssapi
       --with-libidn2
-      --with-libmetalink
       --with-librtmp
       --with-libssh2
       --without-libpsl

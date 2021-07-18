@@ -1,8 +1,8 @@
 class Htslib < Formula
   desc "C library for high-throughput sequencing data formats"
   homepage "https://www.htslib.org/"
-  url "https://github.com/samtools/htslib/releases/download/1.11/htslib-1.11.tar.bz2"
-  sha256 "cffadd9baa6fce27b8fe0b01a462b489f06a5433dfe92121f667f40f632538d7"
+  url "https://github.com/samtools/htslib/releases/download/1.13/htslib-1.13.tar.bz2"
+  sha256 "f2407df9f97f0bb6b07656579e41a1ca5100464067b6b21bf962a2ea4b0efd65"
   license "MIT"
 
   livecheck do
@@ -11,11 +11,11 @@ class Htslib < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "064702cff6bf08fcde27f3315ee3f252d4ab402cec419165bc9c3a29b0ff88f1"
-    sha256 cellar: :any, big_sur:       "041b57665a510b5f997378bf3e3ce77c514dd3d926bb657b8ed51c5d3d12428d"
-    sha256 cellar: :any, catalina:      "f28d03e151afa13f70ed32382fe39dfbd519b94684bffc1351e38c928156f678"
-    sha256 cellar: :any, mojave:        "e32ece4437430fb982ab295b6efaa9bed569dd5a661adcf1bc4240b48ae72914"
-    sha256 cellar: :any, high_sierra:   "b0fd73dc104edc3fc591a998ce27fe99e8086873b0ac29775532374213225a1f"
+    sha256 cellar: :any,                 arm64_big_sur: "0f84a4bab64db1ae6333e415bbcba48ef8c659fd3e94182a4cfc4baf2e85d9e7"
+    sha256 cellar: :any,                 big_sur:       "1c18fea212fa8c79639aa73283277a9f38451d8c27b63942ae1d27082f86a712"
+    sha256 cellar: :any,                 catalina:      "f063c7ecbbace5ca9c5110ace1e45ad3629323108bfbd77b3d0cdfbeca7979c5"
+    sha256 cellar: :any,                 mojave:        "291e64099d31bffc8c3151e28702e611a5adf83d47aa123a53a4149a3374ad3a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "38e217917f15baa38f80d718e658b04786c648904a2293a19042489c630deb6a"
   end
 
   depends_on "xz"
@@ -27,11 +27,15 @@ class Htslib < Formula
   def install
     system "./configure", "--prefix=#{prefix}", "--enable-libcurl"
     system "make", "install"
-    pkgshare.install "test"
   end
 
   test do
-    sam = pkgshare/"test/ce#1.sam"
+    sam = testpath/"test.sam"
+    sam.write <<~EOS
+      @SQ	SN:chr1	LN:500
+      r1	0	chr1	100	0	4M	*	0	0	ATGC	ABCD
+      r2	0	chr1	200	0	4M	*	0	0	AATT	EFGH
+    EOS
     assert_match "SAM", shell_output("#{bin}/htsfile #{sam}")
     system "#{bin}/bgzip -c #{sam} > sam.gz"
     assert_predicate testpath/"sam.gz", :exist?

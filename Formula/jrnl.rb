@@ -3,15 +3,16 @@ class Jrnl < Formula
 
   desc "Command-line note taker"
   homepage "https://jrnl.sh/"
-  url "https://files.pythonhosted.org/packages/38/37/05cefb62bfdb8c02429a565393dc1847740364af4d11f89efb3a06ff3d52/jrnl-2.7.1.tar.gz"
-  sha256 "53fa205afc3853c5e93ecf2bdcef2208331cc8ce235bfe864edfe936780888ca"
+  url "https://files.pythonhosted.org/packages/76/9b/87e8c99a2bb5ae7d6912c25d70eadd20b1c5a882acfc8aec61402b157440/jrnl-2.8.1.tar.gz"
+  sha256 "a69f0fa9be3dff7fa32d8a2ea3697ed828329b1db595fde23bbba5eab460d519"
   license "GPL-3.0-only"
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "5e7f32f806e443d3f55d478049b02238983804751fc0c14b252fa742fc3ac415"
-    sha256 cellar: :any, big_sur:       "6a04f3c850ce99ad46329f20adceb5bf66d603fa2bca6f0acce166f7018d964e"
-    sha256 cellar: :any, catalina:      "b2c250572ec81331c3ffa66b8a3c2fb20d9e47ad37a450969c75af8697303d1b"
-    sha256 cellar: :any, mojave:        "ec97793883d503e7547bc740fa081e5b6aa66ebb87d91d7000480f60ab3d911a"
+    sha256 cellar: :any,                 arm64_big_sur: "8e35532250e8864b1b81559f6e675b794ffb20a301f6874dd8cc469df2b12de9"
+    sha256 cellar: :any,                 big_sur:       "75de14f6e281c827e06e3317a68c06fa680b1fff15d7ad63c9f4a991b1ac48e3"
+    sha256 cellar: :any,                 catalina:      "1819fb9d1ac45a4ac4ea688ab7269f89e66c7f505ece4dedcaaa64c268cbc152"
+    sha256 cellar: :any,                 mojave:        "64ff4066d306e04755e8f1fafbbc8806f42a10d63ca31d23d88f4123299f61b0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "369d83264052d3a8617084e71e61ed5411d0058934f301ca9d19e3bd40f25f86"
   end
 
   depends_on "rust" => :build
@@ -44,13 +45,18 @@ class Jrnl < Formula
   end
 
   resource "cryptography" do
-    url "https://files.pythonhosted.org/packages/fa/2d/2154d8cb773064570f48ec0b60258a4522490fcb115a6c7c9423482ca993/cryptography-3.4.6.tar.gz"
-    sha256 "2d32223e5b0ee02943f32b19245b61a62db83a882f0e76cc564e1cec60d48f87"
+    url "https://files.pythonhosted.org/packages/9b/77/461087a514d2e8ece1c975d8216bc03f7048e6090c5166bc34115afdaa53/cryptography-3.4.7.tar.gz"
+    sha256 "3d10de8116d25649631977cb37da6cbdd2d6fa0e0281d014a5b7d337255ca713"
+  end
+
+  resource "importlib-metadata" do
+    url "https://files.pythonhosted.org/packages/91/b6/4f8d521c15fa22bca780aeff56a5b43665ac522585b2b2090e3626ca585f/importlib_metadata-4.0.1.tar.gz"
+    sha256 "8c501196e49fb9df5df43833bdb1e4328f64847763ec8a50703148b73784d581"
   end
 
   resource "keyring" do
-    url "https://files.pythonhosted.org/packages/bd/4f/76c58e52c08ac53ffed2f3d463cd72799adca2aba3e357c7b727baeb8ff6/keyring-22.3.0.tar.gz"
-    sha256 "16927a444b2c73f983520a48dec79ddab49fe76429ea05b8d528d778c8339522"
+    url "https://files.pythonhosted.org/packages/b0/b5/b27458e1d2adf2a11c6e95c67ac63f828e96fe7e166132e5dacbe03e88c0/keyring-23.0.1.tar.gz"
+    sha256 "045703609dd3fccfcdb27da201684278823b72af515aedec1a8515719a038cb8"
   end
 
   resource "parsedatetime" do
@@ -98,6 +104,11 @@ class Jrnl < Formula
     sha256 "643c97c5294aedc737780a49d9df30889321cbe1204eac2c2ec6134035a92e44"
   end
 
+  resource "zipp" do
+    url "https://files.pythonhosted.org/packages/38/f9/4fa6df2753ded1bcc1ce2fdd8046f78bd240ff7647f5c9bcf547c0df77e3/zipp-3.4.1.tar.gz"
+    sha256 "3607921face881ba3e026887d8150cca609d517579abe052ac81fc5aeffdbd76"
+  end
+
   resource "asn1crypto" do
     on_linux do
       url "https://files.pythonhosted.org/packages/9f/3d/8beae739ed8c1c8f00ceac0ab6b0e97299b42da869e24cf82851b27a9123/asn1crypto-1.3.0.tar.gz"
@@ -125,7 +136,7 @@ class Jrnl < Formula
 
   test do
     (testpath/"tests.sh").write <<~EOS
-      #!/usr/bin/expect -f
+      #!/usr/bin/env expect
 
       set timeout 3
       match_max 100000

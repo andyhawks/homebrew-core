@@ -1,17 +1,17 @@
 class Gjs < Formula
   desc "JavaScript Bindings for GNOME"
   homepage "https://gitlab.gnome.org/GNOME/gjs/wikis/Home"
-  url "https://download.gnome.org/sources/gjs/1.66/gjs-1.66.2.tar.xz"
-  sha256 "bd7f5f8b171277cc0bb9ee1754b0240b62f06a76b8b18c968cf471b34ab34e59"
+  url "https://download.gnome.org/sources/gjs/1.68/gjs-1.68.1.tar.xz"
+  sha256 "2ffa3ec2041104fcf9ab5dcc8f7cd9caa062278590318ffef9541956af5b4c70"
   license all_of: ["LGPL-2.0-or-later", "MIT"]
-  revision 2
 
   bottle do
-    sha256 big_sur:  "a065bebe7a6d0418e0fc35aed79ff6080691305f19bcc78de6bb81405ab73ee3"
-    sha256 catalina: "f630015b9b05f59c731cba6f99bacbd11be5ca6ac865b8a29f496c0fb1d34688"
-    sha256 mojave:   "150190528f20702178f5ad8391ad85b8f576eefa0f40b9bff94191603961dbf0"
+    sha256 big_sur:  "09de9508a973b368bf81cd451429b27214e8ee97b3c098416aabb06076497bbc"
+    sha256 catalina: "bb5690af272dbed13331beeca7bcd2976b3b106362eead30a62db7cb2f5298a9"
+    sha256 mojave:   "6fce786edaf8c678fd3b56298991a01da89dee0b3bb41281f378fe7178ab067b"
   end
 
+  depends_on "autoconf@2.13" => :build
   depends_on "meson" => :build
   depends_on "ninja" => :build
   depends_on "pkg-config" => :build
@@ -23,34 +23,18 @@ class Gjs < Formula
   depends_on "nspr"
   depends_on "readline"
 
-  resource "autoconf@213" do
-    url "https://ftp.gnu.org/gnu/autoconf/autoconf-2.13.tar.gz"
-    mirror "https://ftpmirror.gnu.org/autoconf/autoconf-2.13.tar.gz"
-    sha256 "f0611136bee505811e9ca11ca7ac188ef5323a8e2ef19cffd3edb3cf08fd791e"
-  end
-
   resource "six" do
     url "https://files.pythonhosted.org/packages/6b/34/415834bfdafca3c5f451532e8a8d9ba89a21c9743a0c59fbd0205c7f9426/six-1.15.0.tar.gz"
     sha256 "30639c035cdb23534cd4aa2dd52c3bf48f06e5f4a941509c8bafd8ce11080259"
   end
 
   resource "mozjs78" do
-    url "https://archive.mozilla.org/pub/firefox/releases/78.8.0esr/source/firefox-78.8.0esr.source.tar.xz"
-    sha256 "1cf2dfdee2e31fd0a5ecced6275a33fa11bee1d2a7c65e23350b26992584a110"
+    url "https://archive.mozilla.org/pub/firefox/releases/78.10.1esr/source/firefox-78.10.1esr.source.tar.xz"
+    sha256 "c41f45072b0eb84b9c5dcb381298f91d49249db97784c7e173b5f210cd15cf3f"
   end
 
   def install
     ENV.cxx11
-
-    resource("autoconf@213").stage do
-      system "./configure", "--disable-debug",
-                            "--disable-dependency-tracking",
-                            "--program-suffix=213",
-                            "--prefix=#{buildpath}/autoconf",
-                            "--infodir=#{buildpath}/autoconf/share/info",
-                            "--datadir=#{buildpath}/autoconf/share"
-      system "make", "install"
-    end
 
     resource("six").stage do
       system Formula["python@3.8"].opt_bin/"python3", *Language::Python.setup_install_args(buildpath/"vendor")

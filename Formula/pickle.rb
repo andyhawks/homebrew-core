@@ -1,11 +1,16 @@
 class Pickle < Formula
   desc "PHP Extension installer"
   homepage "https://github.com/FriendsOfPHP/pickle"
-  url "https://github.com/FriendsOfPHP/pickle/releases/download/v0.7.2/pickle.phar"
-  sha256 "4fee7dbfe44c93c939fbc7d4b1929a3255e2d042b0e46685dac80a5e181c102e"
+  url "https://github.com/FriendsOfPHP/pickle/releases/download/v0.7.4/pickle.phar"
+  sha256 "1ddeb6139262af3d454322f89e32802d06b2584c620c8f4cd1be64a13a46a221"
   license "BSD-3-Clause"
 
-  bottle :unneeded
+  bottle do
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "56cb810f374eeb4752ba6b25e18d14e07a44be86f3052884fcc690edd20f5a9f"
+    sha256 cellar: :any_skip_relocation, big_sur:       "6929dde45a9d39e24b03d5b684ed89e5f41f396938483bc619d26b7686a23d02"
+    sha256 cellar: :any_skip_relocation, catalina:      "6929dde45a9d39e24b03d5b684ed89e5f41f396938483bc619d26b7686a23d02"
+    sha256 cellar: :any_skip_relocation, mojave:        "6929dde45a9d39e24b03d5b684ed89e5f41f396938483bc619d26b7686a23d02"
+  end
 
   depends_on "php"
 

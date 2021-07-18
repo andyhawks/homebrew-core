@@ -3,17 +3,17 @@ class GobjectIntrospection < Formula
 
   desc "Generate introspection data for GObject libraries"
   homepage "https://gi.readthedocs.io/en/latest/"
-  url "https://download.gnome.org/sources/gobject-introspection/1.66/gobject-introspection-1.66.1.tar.xz"
-  sha256 "dd44a55ee5f426ea22b6b89624708f9e8d53f5cc94e5485c15c87cb30e06161d"
+  url "https://download.gnome.org/sources/gobject-introspection/1.68/gobject-introspection-1.68.0.tar.xz"
+  sha256 "d229242481a201b84a0c66716de1752bca41db4133672cfcfb37c93eb6e54a27"
   license all_of: ["GPL-2.0-or-later", "LGPL-2.0-or-later", "MIT"]
   revision 1
 
   bottle do
-    sha256 arm64_big_sur: "2d82497ba4828a88c50e4842a2f78849843b31dc12263591f3e1ce578a61c199"
-    sha256 big_sur:       "e5894b5eec0b33c9d00d0b7b1159cdfe6a2947fcf9ac9ade5ff621f2df7932df"
-    sha256 catalina:      "3e85468a3324cb560775e024c6fd52212af73994898b381faff9aad5baa2fdb6"
-    sha256 mojave:        "1d42d9c900dab307aefddffe723140ec2dfa25201426b4426c76cca28a4c46fa"
-    sha256 high_sierra:   "e22482d7c20cefd6c020eb7bb3406a9da8e159a128a700fa9d13983c3da426e7"
+    sha256 arm64_big_sur: "1f2c84c5754435ef62fb859cf222f20b6e488fc0829c406631180a07220ef0c7"
+    sha256 big_sur:       "f2838a38fcc1c1fd675d9fb25d7076875498cf1374b9f4d6f7164174a0384f86"
+    sha256 catalina:      "9cc1e1379832e2f14a6e5b4ceab54e3c144f3653ebf9b28d367b472f8bfaf47a"
+    sha256 mojave:        "9bc64021f82a4ecddbfc6103d966ba0730bff8689e82c1285a31ccf1aa12a526"
+    sha256 x86_64_linux:  "cf067ec268af77b2f2c9132ea33fb714a65fbfc304013f229947ce8ebfa1b7fd"
   end
 
   depends_on "bison" => :build
@@ -32,6 +32,14 @@ class GobjectIntrospection < Formula
         revision: "499ac89f8a9ad17d250e907f74912159ea216416"
   end
 
+  # Fix library search path on non-/usr/local installs (e.g. Apple Silicon)
+  # See: https://github.com/Homebrew/homebrew-core/issues/75020
+  #      https://gitlab.gnome.org/GNOME/gobject-introspection/-/merge_requests/273
+  patch do
+    url "https://gitlab.gnome.org/tschoonj/gobject-introspection/-/commit/a7be304478b25271166cd92d110f251a8742d16b.diff"
+    sha256 "740c9fba499b1491689b0b1216f9e693e5cb35c9a8565df4314341122ce12f81"
+  end
+
   def install
     ENV["GI_SCANNER_DISABLE_CACHE"] = "true"
     inreplace "giscanner/transformer.py", "/usr/share", "#{HOMEBREW_PREFIX}/share"
@@ -41,7 +49,9 @@ class GobjectIntrospection < Formula
 
     mkdir "build" do
       system "meson", *std_meson_args,
-        "-Dpython=#{Formula["python@3.9"].opt_bin}/python3", ".."
+        "-Dpython=#{Formula["python@3.9"].opt_bin}/python3",
+        "-Dextra_library_paths=#{HOMEBREW_PREFIX}/lib",
+        ".."
       system "ninja", "-v"
       system "ninja", "install", "-v"
       bin.find { |f| rewrite_shebang detected_python_shebang, f }

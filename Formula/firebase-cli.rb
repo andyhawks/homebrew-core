@@ -3,16 +3,17 @@ require "language/node"
 class FirebaseCli < Formula
   desc "Firebase command-line tools"
   homepage "https://firebase.google.com/docs/cli/"
-  url "https://registry.npmjs.org/firebase-tools/-/firebase-tools-9.6.1.tgz"
-  sha256 "a6f98604bf03c671c4372a12eded0d10482164f594a47b79e54310c6a02f0752"
+  url "https://registry.npmjs.org/firebase-tools/-/firebase-tools-9.16.0.tgz"
+  sha256 "93177d8aba4109daf3628b03bf4adfa8f790015644e950dcdaea2c0b0e5963f5"
   license "MIT"
   head "https://github.com/firebase/firebase-tools.git"
 
   bottle do
-    sha256                               arm64_big_sur: "28d21f8585f99ff77b3af7f7defcccd0a9b24e652a10156fd958b8234b07629a"
-    sha256 cellar: :any_skip_relocation, big_sur:       "495559fc5331a55daa0e8cc82bef763d68f6176b3f90b48d483cfd5e1120b8ce"
-    sha256 cellar: :any_skip_relocation, catalina:      "cc1412e2205a79a23b1e22d4732cf4a1d348d64b9feb92c2bfeb861f1333e7f0"
-    sha256 cellar: :any_skip_relocation, mojave:        "121dced0312780bfa81ae889fa8f6e328b8e2650a37247146b71ba40b75b569c"
+    sha256                               arm64_big_sur: "cb8888ba0ddc3cdafd621bc8bc533476a0f2adc8494031af8cc72dc0e9035abb"
+    sha256 cellar: :any_skip_relocation, big_sur:       "8c8539d00283d13fe2410c2abbae5fdcf429a6de54b9167157a205ab2999b935"
+    sha256 cellar: :any_skip_relocation, catalina:      "8c8539d00283d13fe2410c2abbae5fdcf429a6de54b9167157a205ab2999b935"
+    sha256 cellar: :any_skip_relocation, mojave:        "8c8539d00283d13fe2410c2abbae5fdcf429a6de54b9167157a205ab2999b935"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "638ce46ed15213beb17b9c85fc8d17caca0f8bae90d021065e57c103d6d21c38"
   end
 
   depends_on "node"

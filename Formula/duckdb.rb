@@ -2,14 +2,15 @@ class Duckdb < Formula
   desc "Embeddable SQL OLAP Database Management System"
   homepage "https://www.duckdb.org"
   url "https://github.com/cwida/duckdb.git",
-      tag:      "v0.2.3",
-      revision: "436f6455f6e48b571bf5ba0812332f08d0bd65f4"
+      tag:      "v0.2.7",
+      revision: "8bc050d05b25a379efdaa537bd801b712671a83b"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any, big_sur:  "f3cae9c32ad042433dd66119d71b2b344d41af36fa1ce1329fcf285d917605e5"
-    sha256 cellar: :any, catalina: "a082aa7db3bf77040788cc6265f57cc0df1d62844de59cabc20460d9968a0941"
-    sha256 cellar: :any, mojave:   "14910bb5cebfda1f37a44c76f0ec20d58eda17a02370a8baac926920ffd5485b"
+    sha256 cellar: :any, arm64_big_sur: "be1c4285a38b7224c479c8b7af840a0bd64ff6f4336aee8ab7fa9e982c733140"
+    sha256 cellar: :any, big_sur:       "4848fe1c93a3e16fed76bebc2441abf08a2cc9112604a8cd4095d0de54bc3786"
+    sha256 cellar: :any, catalina:      "2930a8c7cea33085291b47312d606c6c690fac65fc076d4d0cfc27eba534517e"
+    sha256 cellar: :any, mojave:        "82e004232c2bf0a15c7f5d99b4f3b4a5969deaeec4414fa5566dbb8413f2ca2c"
   end
 
   depends_on "cmake" => :build

@@ -1,8 +1,8 @@
 class MysqlAT57 < Formula
   desc "Open source relational database management system"
   homepage "https://dev.mysql.com/doc/refman/5.7/en/"
-  url "https://cdn.mysql.com/Downloads/MySQL-5.7/mysql-boost-5.7.32.tar.gz"
-  sha256 "9a8a04a2b0116ccff9a8d8aace07aaeaacf47329b701c5dfa9fa4351d3f1933b"
+  url "https://cdn.mysql.com/Downloads/MySQL-5.7/mysql-boost-5.7.34.tar.gz"
+  sha256 "5bc2c7c0bb944b5bb219480dde3c1caeb049e7351b5bba94c3b00ac207929c7b"
   license "GPL-2.0-only"
 
   livecheck do
@@ -11,11 +11,11 @@ class MysqlAT57 < Formula
   end
 
   bottle do
-    rebuild 2
-    sha256 arm64_big_sur: "828675045ac442a6862d32f58a588a5d4c3c66bbc835a6492b3f2c4bab1ac367"
-    sha256 big_sur:       "d698d7de62f5d7d3eef93c04c3ac2b7ba0aa2081f31f6617972b6c88a18a95e5"
-    sha256 catalina:      "1bf3050f0ed024f54538ccf95d96a41536ab54d87e303d802f32b5c149eb8eb7"
-    sha256 mojave:        "0240b57da7513b0082d251cc314a27022842fd588092a22088cd14eec9f1cc86"
+    sha256 arm64_big_sur: "4ad418db08f4499bb0462a178ea8a7b5262cc55b1f1c4f7ded4df252537f8bb6"
+    sha256 big_sur:       "baf50315c60aef1b4598999f95f280e23d98151ca29e02884ea78e5b99126e0e"
+    sha256 catalina:      "9a6ff5cda60fefb428cb3799f1869d16f69f9a29718dbd8d64692465bd13082d"
+    sha256 mojave:        "542dc7e4c5e567828a5db948b08baa4e02c0a511515ad2d7d973e065132c488e"
+    sha256 x86_64_linux:  "0fbe59e5bc670ec019c9d0c11aa06b0b5087a73e55d9c8ff795459463bd8f467"
   end
 
   keg_only :versioned_formula
@@ -33,7 +33,20 @@ class MysqlAT57 < Formula
     var/"mysql"
   end
 
+  # Fixes loading of VERSION file, backported from mysql/mysql-server@51675dd
+  patch :DATA
+
   def install
+    on_linux do
+      # Fix libmysqlgcs.a(gcs_logging.cc.o): relocation R_X86_64_32
+      # against `_ZN17Gcs_debug_options12m_debug_noneB5cxx11E' can not be used when making
+      # a shared object; recompile with -fPIC
+      ENV.append_to_cflags "-fPIC"
+    end
+
+    # Fixes loading of VERSION file; used in conjunction with patch
+    File.rename "VERSION", "MYSQL_VERSION"
+
     # -DINSTALL_* are relative to `CMAKE_INSTALL_PREFIX` (`prefix`)
     args = %W[
       -DCOMPILATION_COMMENT=Homebrew
@@ -164,3 +177,28 @@ class MysqlAT57 < Formula
     system "#{bin}/mysqladmin", "--port=#{port}", "--user=root", "--password=", "shutdown"
   end
 end
+
+__END__
+diff --git a/cmake/mysql_version.cmake b/cmake/mysql_version.cmake
+index 43d731e..3031258 100644
+--- a/cmake/mysql_version.cmake
++++ b/cmake/mysql_version.cmake
+@@ -31,7 +31,7 @@ SET(DOT_FRM_VERSION "6")
+ 
+ # Generate "something" to trigger cmake rerun when VERSION changes
+ CONFIGURE_FILE(
+-  ${CMAKE_SOURCE_DIR}/VERSION
++  ${CMAKE_SOURCE_DIR}/MYSQL_VERSION
+   ${CMAKE_BINARY_DIR}/VERSION.dep
+ )
+ 
+@@ -39,7 +39,7 @@ CONFIGURE_FILE(
+ 
+ MACRO(MYSQL_GET_CONFIG_VALUE keyword var)
+  IF(NOT ${var})
+-   FILE (STRINGS ${CMAKE_SOURCE_DIR}/VERSION str REGEX "^[ ]*${keyword}=")
++   FILE (STRINGS ${CMAKE_SOURCE_DIR}/MYSQL_VERSION str REGEX "^[ ]*${keyword}=")
+    IF(str)
+      STRING(REPLACE "${keyword}=" "" str ${str})
+      STRING(REGEX REPLACE  "[ ].*" ""  str "${str}")
+

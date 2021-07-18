@@ -1,9 +1,10 @@
 class Openimageio < Formula
   desc "Library for reading, processing and writing images"
   homepage "https://openimageio.org/"
-  url "https://github.com/OpenImageIO/oiio/archive/Release-2.2.12.0.tar.gz"
-  sha256 "6010b0642b5bf9c045c397a0f0a7efec232fdaffb49984d449073d006e9004a6"
+  url "https://github.com/OpenImageIO/oiio/archive/Release-2.2.16.0.tar.gz"
+  sha256 "d1a59f32dbba3ba71ad2e62e107034d1c5287bca1b0696474e927d504cd05ef4"
   license "BSD-3-Clause"
+  revision 1
   head "https://github.com/OpenImageIO/oiio.git"
 
   livecheck do
@@ -13,9 +14,10 @@ class Openimageio < Formula
   end
 
   bottle do
-    sha256 big_sur:  "3df83ab1ae7839a94676222239912f28cc4192ba977fe44acebd07c20b678f76"
-    sha256 catalina: "8c040bf300de4c716578d20cd0cab302ede08588761fa1f56e45ca98d245cbab"
-    sha256 mojave:   "940b43b047c56509bb52fe39912ac9cf3cfec63525e706a9f1ff0df79c15c48f"
+    sha256 cellar: :any, arm64_big_sur: "070cab464c961ce988cfb2ecb16efd31ea9fe527124f9d73e110bcf69810d3c6"
+    sha256 cellar: :any, big_sur:       "db72e144b06fcd01b5e1317786924e16e1518ce5f2ee6a3538c73459a85f3c9e"
+    sha256 cellar: :any, catalina:      "3b1df7b5ca4dced9ceba91bc7fb19ee39165965f932c7806d6c787d30748599d"
+    sha256 cellar: :any, mojave:        "e49e7d6e1c0daab20f24d5d742af3a8b959ddc5f658420d3d94ad0fb62fa7556"
   end
 
   depends_on "cmake" => :build
@@ -25,7 +27,7 @@ class Openimageio < Formula
   depends_on "ffmpeg"
   depends_on "freetype"
   depends_on "giflib"
-  depends_on "ilmbase"
+  depends_on "imath"
   depends_on "jpeg"
   depends_on "libheif"
   depends_on "libpng"
@@ -54,6 +56,9 @@ class Openimageio < Formula
     # CMake picks up the system's python dylib, even if we have a brewed one.
     py3ver = Language::Python.major_minor_version Formula["python@3.9"].opt_bin/"python3"
     py3prefix = Formula["python@3.9"].opt_frameworks/"Python.framework/Versions/#{py3ver}"
+    on_linux do
+      py3prefix = Formula["python@3.9"].opt_prefix
+    end
 
     ENV["PYTHONPATH"] = lib/"python#{py3ver}/site-packages"
 

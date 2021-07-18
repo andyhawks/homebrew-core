@@ -3,18 +3,20 @@ class Awscli < Formula
 
   desc "Official Amazon AWS command-line interface"
   homepage "https://aws.amazon.com/cli/"
-  url "https://github.com/aws/aws-cli/archive/2.1.30.tar.gz"
-  sha256 "0902b0399684174bd9e865f14895314d0b4ab535ad24b3079400ff85717b14a9"
+  url "https://github.com/aws/aws-cli/archive/2.2.20.tar.gz"
+  sha256 "3e3e1d72e2ee5d6ad2a641129cf627ff4f9a4d80c61833a2506b754e2436a869"
   license "Apache-2.0"
   head "https://github.com/aws/aws-cli.git", branch: "v2"
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "6b26063548191c85f74e7a5fc224a03832a52c7277be145dff14966b91e731eb"
-    sha256               big_sur:       "5acbb3297d97ea79d3597a19036d0a1f83907eb99913319ebea3df3333243c2f"
-    sha256               catalina:      "bf8d341b5603fa67b8fe2be24e418d8f612b6a85676ba16c647379629157743a"
-    sha256               mojave:        "160067567368e1d16a2b7f51ce25559f602a8f60288754f7e247640046d2abb1"
+    sha256 cellar: :any,                 arm64_big_sur: "3e8fba8b885387ee5faf5e08d27f1da792a2932abaa9335b6896233a1996ae18"
+    sha256                               big_sur:       "9c5088e48a0d91e1090b7e14d9e467e4fbc9dc36bde73f8c28ea4fc5cf52c617"
+    sha256                               catalina:      "c1db2e159f78cfd0db5d18bfd233708802d29df665ef08d9f49c39047f294800"
+    sha256                               mojave:        "e83481f4c0cf3ec443dcae7d25057fd12e46186e83f8c90c2ec4c050976e002e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8fac0c61931142d310a18b27632736ea6d28a5e560df4f2a8a46959d845e9663"
   end
 
+  depends_on "cmake" => :build
   depends_on "python@3.9"
 
   uses_from_macos "groff"
@@ -56,7 +58,7 @@ class Awscli < Formula
 
   test do
     assert_match "topics", shell_output("#{bin}/aws help")
-    assert_include Dir["#{libexec}/lib/python3.9/site-packages/awscli/data/*"],
-                   "#{libexec}/lib/python3.9/site-packages/awscli/data/ac.index"
+    assert_includes Dir["#{libexec}/lib/python3.9/site-packages/awscli/data/*"],
+                    "#{libexec}/lib/python3.9/site-packages/awscli/data/ac.index"
   end
 end

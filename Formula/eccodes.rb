@@ -1,10 +1,9 @@
 class Eccodes < Formula
   desc "Decode and encode messages in the GRIB 1/2 and BUFR 3/4 formats"
   homepage "https://confluence.ecmwf.int/display/ECC"
-  url "https://software.ecmwf.int/wiki/download/attachments/45757960/eccodes-2.20.0-Source.tar.gz"
-  sha256 "207a3d7966e75d85920569b55a19824673e8cd0b50db4c4dac2d3d52eacd7985"
+  url "https://software.ecmwf.int/wiki/download/attachments/45757960/eccodes-2.22.1-Source.tar.gz"
+  sha256 "75c7ee96469bb30b0c8f7edbdc4429ece4415897969f75c36173545242bc9e85"
   license "Apache-2.0"
-  revision 1
 
   livecheck do
     url "https://software.ecmwf.int/wiki/display/ECC/Releases"
@@ -12,10 +11,10 @@ class Eccodes < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "4963deb84e8b78f739f3dea7b60a02d10d2816fd6ae33977b4446ba486d644e2"
-    sha256 big_sur:       "f6c14688b40b22d5ffc85eac003c4424fc5c86b16e43df945e59142f708df72d"
-    sha256 catalina:      "1319aad1f0f1e7c65277d87adacf2d7525a36a824f540374a518f2356bebba62"
-    sha256 mojave:        "011de52ff9e8593f69de8782141953934340d1c668aa6d9cdc74c14f09571748"
+    sha256 arm64_big_sur: "a9ab14fc89f7fb8431e873769b02b03a92a2e6a605b608fb08a4ade32a4aced8"
+    sha256 big_sur:       "92a968f329882ab71b4cd181eba9b369d3a9118d02fdabd8f040d5b0b9119e95"
+    sha256 catalina:      "9b681316cca163189707ca1162df7af30e166151e1c11ad2a00ba75ea57b7120"
+    sha256 mojave:        "9e49cbea962e91b551edc93f5bde6f7f245fe23fb533a64c2f5ec4535576e00c"
   end
 
   depends_on "cmake" => :build
@@ -39,9 +38,8 @@ class Eccodes < Formula
     end
 
     # Avoid references to Homebrew shims directory
-    inreplace include/"eccodes_ecbuild_config.h", HOMEBREW_LIBRARY/"Homebrew/shims/mac/super/clang", "/usr/bin/clang"
-    inreplace lib/"pkgconfig/eccodes.pc", HOMEBREW_LIBRARY/"Homebrew/shims/mac/super/clang", "/usr/bin/clang"
-    inreplace lib/"pkgconfig/eccodes_f90.pc", HOMEBREW_LIBRARY/"Homebrew/shims/mac/super/clang", "/usr/bin/clang"
+    shim_references = [include/"eccodes_ecbuild_config.h", lib/"pkgconfig/eccodes.pc", lib/"pkgconfig/eccodes_f90.pc"]
+    inreplace shim_references, %r{#{HOMEBREW_SHIMS_PATH}/[^/]+/super/#{ENV.cc}}, ENV.cc
   end
 
   test do

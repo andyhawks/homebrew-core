@@ -1,8 +1,8 @@
 class Nspr < Formula
   desc "Platform-neutral API for system-level and libc-like functions"
   homepage "https://developer.mozilla.org/docs/Mozilla/Projects/NSPR"
-  url "https://archive.mozilla.org/pub/nspr/releases/v4.29/src/nspr-4.29.tar.gz"
-  sha256 "22286bdb8059d74632cc7c2865c139e63953ecfb33bf4362ab58827e86e92582"
+  url "https://archive.mozilla.org/pub/nspr/releases/v4.32/src/nspr-4.32.tar.gz"
+  sha256 "bb6bf4f534b9559cf123dcdc6f9cd8167de950314a90a88b2a329c16836e7f6c"
   license "MPL-2.0"
 
   livecheck do
@@ -11,11 +11,11 @@ class Nspr < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "c02e2a44ebd1f681e356062d94af3a7682c212156ec99b7d193f5ff0cd77735b"
-    sha256 cellar: :any, big_sur:       "853f1762fc3372f776f66ead09a8f45b7d03de583b5d70a2c11140eafb899897"
-    sha256 cellar: :any, catalina:      "c47dc31bf73d954e1d4629a92cff5f2e5801573fa9cc1caab7c9ea3b0fb68566"
-    sha256 cellar: :any, mojave:        "5b87579476cdbb34be47c9579125183f9ff29373e9b25e94d419b02995e6ae29"
-    sha256 cellar: :any, high_sierra:   "1b3e41e52e1dc0131ca2ae486d099fb91e7e983355d8dd4ae18ff47a8547fe1e"
+    sha256 cellar: :any,                 arm64_big_sur: "69c39b2f0a2d93ea5969a9906d0e5063caa34ad495cd56cef7e22b8b8628a67a"
+    sha256 cellar: :any,                 big_sur:       "fa4089b067d319a827833747ed64c0e9ed9ce1c95aa54d77fb1dabffd52436ed"
+    sha256 cellar: :any,                 catalina:      "f5a4e62a6d63a398ce0d14af9aa25ad1c33c8eb9ff64de988551ee0791aae69b"
+    sha256 cellar: :any,                 mojave:        "fd4bc5953ceff865f0a3e049fbb06ccb07015c4369a7aa4c67e820af6b7cc53b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e96c1aec46c06a8fb7644697cc962e75278a325e17d39622163b51bdb003d850"
   end
 
   def install
@@ -31,8 +31,11 @@ class Nspr < Formula
         --enable-64bit
       ]
       system "./configure", *args
-      # Remove the broken (for anyone but Firefox) install_name
-      inreplace "config/autoconf.mk", "-install_name @executable_path/$@ ", "-install_name #{lib}/$@ "
+
+      on_macos do
+        # Remove the broken (for anyone but Firefox) install_name
+        inreplace "config/autoconf.mk", "-install_name @executable_path/$@ ", "-install_name #{lib}/$@ "
+      end
 
       system "make"
       system "make", "install"

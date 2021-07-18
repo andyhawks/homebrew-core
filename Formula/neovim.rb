@@ -1,41 +1,30 @@
 class Neovim < Formula
   desc "Ambitious Vim-fork focused on extensibility and agility"
   homepage "https://neovim.io/"
+  url "https://github.com/neovim/neovim/archive/v0.5.0.tar.gz"
+  sha256 "2294caa9d2011996499fbd70e4006e4ef55db75b99b6719154c09262e23764ef"
   license "Apache-2.0"
-  revision 1
-
-  stable do
-    url "https://github.com/neovim/neovim/archive/v0.4.4.tar.gz"
-    sha256 "2f76aac59363677f37592e853ab2c06151cca8830d4b3fe4675b4a52d41fc42c"
-
-    # Patch for Apple Silicon. Backported from
-    # https://github.com/neovim/neovim/pull/12624
-    patch :DATA
-  end
+  head "https://github.com/neovim/neovim.git"
 
   bottle do
-    rebuild 1
-    sha256 arm64_big_sur: "306ef84a70624fa5924d04b0fe949e16433bc7f0a5bab86af368b780926a86a8"
-    sha256 big_sur:       "3a958561859b4f526a729d0efd7030eb57580ba7dc97decff586de6b2c48f804"
-    sha256 catalina:      "c5f97d4a2740a93137452feba2640a401f3bea83bc3b5b5fc2235a043f05cce8"
-    sha256 mojave:        "3646015b633d5c5044f3a27ee64c0a10c11a6554f0de2f0989e7e77b11d11c2c"
-  end
-
-  head do
-    url "https://github.com/neovim/neovim.git"
-    depends_on "tree-sitter"
+    sha256 arm64_big_sur: "8c2031ed12ca5a2af5d317f74a3878b2acdfc8b8bd61f8c58ca99b52bfc2f29a"
+    sha256 big_sur:       "c5e9addc65899936e06676db8a4c0239ca6e6c44936b21df1ade343dfe860995"
+    sha256 catalina:      "13d31cb537237f3b9245c6c2de0e55ae4d7730d06742aec5a3e98a5365934eae"
+    sha256 mojave:        "8f7a519050bf438143c4f7933f63d6aa1ccb1c062f4ae76ccaa7bf22d35f2f6e"
+    sha256 x86_64_linux:  "31f3eed841555c4d2027bc9dd9b7aefde33708231fa6166e0cdb5ab215960767"
   end
 
   depends_on "cmake" => :build
   depends_on "luarocks" => :build
-  depends_on "luv" => :build
   depends_on "pkg-config" => :build
   depends_on "gettext"
   depends_on "libtermkey"
   depends_on "libuv"
   depends_on "libvterm"
   depends_on "luajit-openresty"
+  depends_on "luv"
   depends_on "msgpack"
+  depends_on "tree-sitter"
   depends_on "unibilium"
 
   uses_from_macos "gperf" => :build
@@ -58,11 +47,6 @@ class Neovim < Formula
     sha256 "e0d0d687897f06588558168eeb1902ac41a11edd1b58f1aa61b99d0ea0abbfbc"
   end
 
-  resource "inspect" do
-    url "https://luarocks.org/manifests/kikito/inspect-3.1.1-0.src.rock"
-    sha256 "ea1f347663cebb523e88622b1d6fe38126c79436da4dbf442674208aa14a8f4c"
-  end
-
   def install
     resources.each do |r|
       r.stage(buildpath/"deps-build/build/src/#{r.name}")
@@ -76,7 +60,6 @@ class Neovim < Formula
       %w[
         mpack/mpack-1.0.8-0.rockspec
         lpeg/lpeg-1.0.2-1.src.rock
-        inspect/inspect-3.1.1-0.src.rock
       ].each do |rock|
         dir, rock = rock.split("/")
         cd "build/src/#{dir}" do
@@ -90,12 +73,7 @@ class Neovim < Formula
     end
 
     mkdir "build" do
-      cmake_args = std_cmake_args
-      cmake_args += %W[
-        -DLIBLUV_INCLUDE_DIR=#{Formula["luv"].opt_include}
-        -DLIBLUV_LIBRARY=#{Formula["luv"].opt_lib}/libluv_a.a
-      ]
-      system "cmake", "..", *cmake_args
+      system "cmake", "..", *std_cmake_args
       # Patch out references to Homebrew shims
       inreplace "config/auto/versiondef.h", /#{HOMEBREW_LIBRARY}[^ ]+/o, ENV.cc
       system "make", "install"
@@ -109,26 +87,3 @@ class Neovim < Formula
     assert_equal "Hello World from Neovim!!", (testpath/"test.txt").read.chomp
   end
 end
-
-__END__
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 6b3a8dc..f3370e3 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -358,16 +358,6 @@ if(CMAKE_C_COMPILER_ID STREQUAL "GNU" OR CMAKE_C_COMPILER_ID STREQUAL "Clang")
-   add_definitions(-D_GNU_SOURCE)
- endif()
- 
--if(CMAKE_SYSTEM_NAME STREQUAL "Darwin" AND CMAKE_SIZEOF_VOID_P EQUAL 8)
--  # Required for luajit.
--  set(CMAKE_EXE_LINKER_FLAGS
--    "${CMAKE_EXE_LINKER_FLAGS} -pagezero_size 10000 -image_base 100000000")
--  set(CMAKE_SHARED_LINKER_FLAGS
--    "${CMAKE_SHARED_LINKER_FLAGS} -image_base 100000000")
--  set(CMAKE_MODULE_LINKER_FLAGS
--    "${CMAKE_MODULE_LINKER_FLAGS} -image_base 100000000")
--endif()
--
- include_directories("${PROJECT_BINARY_DIR}/config")
- include_directories("${PROJECT_SOURCE_DIR}/src")
- 

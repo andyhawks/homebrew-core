@@ -3,32 +3,33 @@ class Pylint < Formula
 
   desc "It's not just a linter that annoys you!"
   homepage "https://github.com/PyCQA/pylint"
-  url "https://files.pythonhosted.org/packages/5c/09/4948cd0ad3ef8ab707bab1169bc73672bda3ede1c92e528b02b940be67e8/pylint-2.7.2.tar.gz"
-  sha256 "0e21d3b80b96740909d77206d741aa3ce0b06b41be375d92e1f3244a274c1f8a"
+  url "https://files.pythonhosted.org/packages/59/9a/3a021b3b7965c5070bfec5d54759f076a31bd537043e0dc9b0fb2b49bff6/pylint-2.9.3.tar.gz"
+  sha256 "23a1dc8b30459d78e9ff25942c61bb936108ccbe29dd9e71c01dc8274961709a"
   license "GPL-2.0-or-later"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "b9ad660f542293a84602d0342271c80d84de4897e3ea65b2c0369cb904f9e66e"
-    sha256 cellar: :any_skip_relocation, big_sur:       "51e50930614ca9fb6881bbfaa2b6e074be2a02aa03b244fe506f400c47526dff"
-    sha256 cellar: :any_skip_relocation, catalina:      "26f0378f5d293841df30ba39cdd2289465459017c5c77cb6662e2764d80dbc94"
-    sha256 cellar: :any_skip_relocation, mojave:        "4742fca3c1acb9e40eee01eda416832f07a2e5dc8a70b04b3be8fb969ec387c0"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "3ff41a5e93520b7cc174439913d6c247a8a2e18343993f5a46721f28d2b008b3"
+    sha256 cellar: :any_skip_relocation, big_sur:       "3c45fef23411e00bb55e339c02dd878faab695eb035465d5dd3b25862a6bd1f4"
+    sha256 cellar: :any_skip_relocation, catalina:      "170b472a9d4129dc4a3e167617bb5f87e3a20036269278334b3175d55a263453"
+    sha256 cellar: :any_skip_relocation, mojave:        "2bdd3a79a765e777ee2e1d093c4af0558584f13fd69d737ff6577d93f8cdcfc9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "81a297eea6d1f17c8e62befafe8fa619c0213ddd461028555992936e738bf711"
   end
 
   depends_on "python@3.9"
 
   resource "astroid" do
-    url "https://files.pythonhosted.org/packages/44/47/fe9dfab6f91682d7bcacf8ca813b3084b48f1deda4ac8ee56e49d63b928e/astroid-2.5.1.tar.gz"
-    sha256 "cfc35498ee64017be059ceffab0a25bedf7548ab76f2bea691c5565896e7128d"
+    url "https://files.pythonhosted.org/packages/6a/7f/90312f42efc2a5249f26e436be10f0c53c512b2f3a36af364cd021283660/astroid-2.6.2.tar.gz"
+    sha256 "38b95085e9d92e2ca06cf8b35c12a74fa81da395a6f9e65803742e6509c05892"
   end
 
   resource "isort" do
-    url "https://files.pythonhosted.org/packages/a2/f7/f50fc9555dc0fe2dc1e7f69d93f71961d052857c296cad0fb6d275b20008/isort-5.7.0.tar.gz"
-    sha256 "c729845434366216d320e936b8ad6f9d681aab72dc7cbc2d51bedc3582f3ad1e"
+    url "https://files.pythonhosted.org/packages/b7/8b/7c2200599c22b4ef6f3688f93c4f44065926bc05cbd38c31247b1348f9a3/isort-5.9.1.tar.gz"
+    sha256 "83510593e07e433b77bd5bff0f6f607dbafa06d1a89022616f02d8b699cfcd56"
   end
 
   resource "lazy-object-proxy" do
-    url "https://files.pythonhosted.org/packages/95/b7/8823606ab25245effb6907fd7699f2234ae0bbd39e0c7b10b84def966f45/lazy-object-proxy-1.5.2.tar.gz"
-    sha256 "5944a9b95e97de1980c65f03b79b356f30a43de48682b8bdd90aa5089f0ec1f4"
+    url "https://files.pythonhosted.org/packages/bb/f5/646893a04dcf10d4acddb61c632fd53abb3e942e791317dcdd57f5800108/lazy-object-proxy-1.6.0.tar.gz"
+    sha256 "489000d368377571c6f982fba6497f2aa13c6d1facc40660963da62f5c379726"
   end
 
   resource "mccabe" do
